@@ -83,5 +83,30 @@ CREATE TABLE Movie(
 	CONSTRAINT  chk_Rating CHECK (Rating >= 0 AND Rating <= 10),
 	CONSTRAINT  chk_Copy CHECK (Copy_Num >= 0 AND Copy_Rented >= 0 AND Copy_Rented <= Copy_Num),
 	CONSTRAINT  chk_Fee CHECK (Fee >= 0)
-)
+);
 
+CREATE TABLE Actor (
+ActorID INT IDENTITY(1,1),
+LastName VARCHAR(40) NOT NULL,
+FirstName VARCHAR(40) NOT NULL,
+Gender VARCHAR(10) NOT NULL
+	CHECK( Gender=‘Male’ OR Gender=‘Female’),
+DateOfBirth DATE NOT NULL,
+PRIMARY KEY( ActorID )
+);
+
+CREATE TABLE AppearedIn (
+ActorID INT NOT NULL,
+MovieID INT NOT NULL,
+PRIMARY KEY( ActorID, MovieID ),
+FOREIGN KEY( ActorID ) REFERENCES Actor( ActorID ),
+FOREIGN KEY( MovieID ) REFERENCES Movie( MovieID )
+);
+
+CREATE TABLE RateActor (
+ActorID INT NOT NULL,
+OrderID INT NOT NULL,
+PRIMARY KEY ( ActorID, OrderID )
+FOREIGN KEY ( ActorID ) REFERENCES Actor( ActorID ),
+FOREIGN KEY ( OrderID ) REFERENCES Order( OrderID )
+);
