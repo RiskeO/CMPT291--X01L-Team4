@@ -135,3 +135,11 @@ FOREIGN KEY ( Movie_ID ) REFERENCES Movie( Movie_ID )
 );
 
 CREATE SEQUENCE Orders_Order_ID_Seq START WITH 1000 INCREMENT BY 1;
+
+CREATE TABLE Queue_Up (
+Customer_ID INT NOT NULL,
+Movie_ID INT NOT NULL,
+Sort_Order INT IDENTITY(1,1),
+FOREIGN KEY ( Customer_ID ) REFERENCES Customer( Customer_ID ),
+FOREIGN KEY ( Movie_ID ) REFERENCES Movie( Movie_ID )
+);
