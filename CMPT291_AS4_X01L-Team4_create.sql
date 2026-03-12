@@ -86,27 +86,29 @@ CREATE TABLE Movie(
 );
 
 CREATE TABLE Actor (
-ActorID INT IDENTITY(1,1),
-LastName VARCHAR(40) NOT NULL,
-FirstName VARCHAR(40) NOT NULL,
+Actor_ID INT IDENTITY(1,1),
+Last_Name VARCHAR(40) NOT NULL,
+First_Name VARCHAR(40) NOT NULL,
 Gender VARCHAR(10) NOT NULL
 	CHECK( Gender=‘Male’ OR Gender=‘Female’),
-DateOfBirth DATE NOT NULL,
-PRIMARY KEY( ActorID )
+Date_Of_Birth DATE NOT NULL,
+PRIMARY KEY( Actor_ID )
 );
 
-CREATE TABLE AppearedIn (
-ActorID INT NOT NULL,
-MovieID INT NOT NULL,
-PRIMARY KEY( ActorID, MovieID ),
-FOREIGN KEY( ActorID ) REFERENCES Actor( ActorID ),
-FOREIGN KEY( MovieID ) REFERENCES Movie( MovieID )
+CREATE TABLE Appeared_In (
+Actor_ID INT NOT NULL,
+Movie_ID INT NOT NULL,
+PRIMARY KEY( Actor_ID, Movie_ID ),
+FOREIGN KEY( Actor_ID ) REFERENCES Actor( Actor_ID ),
+FOREIGN KEY( Movie_ID ) REFERENCES Movie( Movie_ID )
 );
 
-CREATE TABLE RateActor (
-ActorID INT NOT NULL,
-OrderID INT NOT NULL,
-PRIMARY KEY ( ActorID, OrderID )
-FOREIGN KEY ( ActorID ) REFERENCES Actor( ActorID ),
-FOREIGN KEY ( OrderID ) REFERENCES Order( OrderID )
+CREATE TABLE Rate_Actor (
+Actor_ID INT NOT NULL,
+Order_ID INT NOT NULL,
+A_Rate INT
+	CHECK( (A_Rate >= 1 AND A_Rate <= 5) OR A_Rate = NULL),
+PRIMARY KEY ( Actor_ID, Order_ID )
+FOREIGN KEY ( Actor_ID ) REFERENCES Actor( Actor_ID ),
+FOREIGN KEY ( Order_ID ) REFERENCES Order( Order_ID )
 );
