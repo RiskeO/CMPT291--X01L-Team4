@@ -83,11 +83,11 @@ CREATE TABLE Movie(
 	Copy_Rented INT NOT NULL default 0,
 	Movie_Rating INT NOT NULL,
 	Available AS (Copy_Num - Copy_Rented) Persisted,
-	CONSTRAINT  chk_Rating CHECK (Movie_Rating >= 0 AND Movie_Rating <= 5),
+	CONSTRAINT  chk_Rating CHECK (Movie_Rating >= 1 AND Movie_Rating <= 5),
 	CONSTRAINT  chk_Copy CHECK (Copy_Num >= 0 AND Copy_Rented >= 0 AND Copy_Rented <= Copy_Num),
 	CONSTRAINT  chk_Fee CHECK (Fee >= 0),
 	CONSTRAINT  chk_Movie_Type CHECK (Movie_Type IN ('Comedy', 'Action', 'Drama', 'Foreign'))
-);
+	);
 
 CREATE SEQUENCE Movie_Movie_ID_Seq START WITH 1000 INCREMENT BY 1;
 
@@ -100,8 +100,6 @@ Gender VARCHAR(10) NOT NULL
 Date_Of_Birth DATETIME NOT NULL,
 PRIMARY KEY( Actor_ID )
 );
-
-CREATE SEQUENCE Actor_Actor_ID_Seq START WITH 1000 INCREMENT BY 1;
 
 CREATE TABLE Appeared_In (
 Actor_ID INT NOT NULL,
