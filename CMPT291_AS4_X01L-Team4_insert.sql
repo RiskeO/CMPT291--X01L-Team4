@@ -13,19 +13,16 @@ ALTER SEQUENCE Employee_Employee_ID_Seq RESTART WITH 1000;
 ALTER SEQUENCE Customer_Customer_ID_Seq RESTART WITH 1000;
 ALTER SEQUENCE Movie_Movie_ID_Seq RESTART WITH 1000;
 ALTER SEQUENCE Orders_Order_ID_Seq RESTART WITH 1000;
-DBCC CHECKIDENT ('Actor', RESEED, 0);
 
 /* Employee */
 insert into Employee (Employee_ID, SSN, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code)
 values (next value for Employee_Employee_ID_Seq, '123456789', 'Johnson', 'Emily', '789 Oak St', 'Edmonton', 'Alberta', '54321');
-
 insert into Employee (Employee_ID, SSN, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code)
 values (next value for Employee_Employee_ID_Seq, '987654321', 'Williams', 'Michael', '321 Pine St', 'Calgary', 'Alberta', '98765');
 
 /* Employee Phone */
 insert into Employee_Phone (Employee_ID, Phone_Num, Phone_Type, Start_Time, End_Time)
 values (1000, '7801234567', 'Mobile', default, NULL);
-
 insert into Employee_Phone (Employee_ID, Phone_Num, Phone_Type, Start_Time, End_Time)
 values (1000, '7807654321', 'Home', default, NULL);
 
@@ -59,7 +56,7 @@ insert into Actor (Last_Name, First_Name, Gender, Date_Of_Birth) values ('Stone'
 insert into Appeared_In values (1, 1000);
 insert into Appeared_In values (2, 1000);
 insert into Appeared_In values (3, 1001);
-insert into Appeared_In values (3, 1002);
+insert into Appeared_In values (3, 1002); 
 
 /* Orders */
 insert into Orders (Order_ID, Customer_ID, Employee_ID, Movie_ID, Checkout_Date, Return_Date, Movie_Rating)
@@ -75,5 +72,3 @@ insert into Queue_Up (Customer_ID, Movie_ID) values (1001, 1000);
 /* Rate Actor */
 insert into Rate_Actor values (1, 1000, 5);
 insert into Rate_Actor values (1, 1001, 4);
-
-select * from Actor;
