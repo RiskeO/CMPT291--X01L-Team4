@@ -94,7 +94,7 @@ Actor_ID INT IDENTITY(1,1),
 Last_Name VARCHAR(40) NOT NULL,
 First_Name VARCHAR(40) NOT NULL,
 Gender VARCHAR(10) NOT NULL
-	CHECK( Gender=‘Male’ OR Gender=‘Female’),
+	CHECK( Gender='Male' OR Gender='Female'),
 Date_Of_Birth DATE NOT NULL,
 PRIMARY KEY( Actor_ID )
 );
@@ -109,16 +109,6 @@ FOREIGN KEY( Actor_ID ) REFERENCES Actor( Actor_ID ),
 FOREIGN KEY( Movie_ID ) REFERENCES Movie( Movie_ID )
 );
 
-CREATE TABLE Rate_Actor (
-Actor_ID INT NOT NULL,
-Order_ID INT NOT NULL,
-A_Rate INT
-	CHECK( (A_Rate >= 1 AND A_Rate <= 5) OR A_Rate = NULL),
-PRIMARY KEY ( Actor_ID, Order_ID ),
-FOREIGN KEY ( Actor_ID ) REFERENCES Actor( Actor_ID ),
-FOREIGN KEY ( Order_ID ) REFERENCES Order( Order_ID )
-);
-
 CREATE TABLE Orders (
 Order_ID INT NOT NULL,
 Customer_ID INT NOT NULL,
@@ -127,12 +117,23 @@ Movie_ID INT NOT NULL,
 Checkout_Date DATE NOT NULL DEFAULT(getdate()),
 Return_Date DATE NOT NULL,
 Movie_Rating INT
-	CHECK( (Movie_Rating >= 1 AND Movie_Rating <= 5) OR Movie_Rating = NULL),
+	CHECK( (Movie_Rating >= 1 AND Movie_Rating <= 5) OR Movie_Rating IS NULL),
 PRIMARY KEY ( Order_ID ),
 FOREIGN KEY ( Customer_ID ) REFERENCES Customer( Customer_ID ),
 FOREIGN KEY ( Employee_ID ) REFERENCES Employee( Employee_ID ),
 FOREIGN KEY ( Movie_ID ) REFERENCES Movie( Movie_ID )
 );
+
+CREATE TABLE Rate_Actor (
+Actor_ID INT NOT NULL,
+Order_ID INT NOT NULL,
+A_Rate INT
+	CHECK( (A_Rate >= 1 AND A_Rate <= 5) OR A_Rate IS NULL),
+PRIMARY KEY ( Actor_ID, Order_ID ),
+FOREIGN KEY ( Actor_ID ) REFERENCES Actor( Actor_ID ),
+FOREIGN KEY ( Order_ID ) REFERENCES Orders( Order_ID )
+);
+
 
 CREATE SEQUENCE Orders_Order_ID_Seq START WITH 1000 INCREMENT BY 1;
 
