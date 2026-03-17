@@ -1,74 +1,119 @@
-﻿delete Rate_Actor;
-delete Queue_Up;
-delete Orders;
-delete Appeared_In;
-delete Actor;
-delete Movie;
-delete Customer_Phone;
-delete Customer;
-delete Employee_Phone;
-delete Employee;
+﻿USE Proj2026W;
 
-ALTER SEQUENCE Employee_Employee_ID_Seq RESTART WITH 1000;
-ALTER SEQUENCE Customer_Customer_ID_Seq RESTART WITH 1000;
-ALTER SEQUENCE Movie_Movie_ID_Seq RESTART WITH 1000;
-ALTER SEQUENCE Orders_Order_ID_Seq RESTART WITH 1000;
+--
+-- Remove test data
+--
 
-/* Employee */
-insert into Employee (Employee_ID, SSN, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code)
-values (next value for Employee_Employee_ID_Seq, '123456789', 'Johnson', 'Emily', '789 Oak St', 'Edmonton', 'Alberta', '54321');
-insert into Employee (Employee_ID, SSN, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code)
-values (next value for Employee_Employee_ID_Seq, '987654321', 'Williams', 'Michael', '321 Pine St', 'Calgary', 'Alberta', '98765');
+DELETE ActorRate;
+DELETE RentalRecord;
+DELETE ActorAppear;
+DELETE Actor;
+DELETE CustomerQueue;
+DELETE Movie;
+DELETE CustomerPhone;
+DELETE Customer;
+DELETE EmployeePhone;
+DELETE Employee;
 
-/* Employee Phone */
-insert into Employee_Phone (Employee_ID, Phone_Num, Phone_Type, Start_Time, End_Time)
-values (1000, '7801234567', 'Mobile', default, NULL);
-insert into Employee_Phone (Employee_ID, Phone_Num, Phone_Type, Start_Time, End_Time)
-values (1000, '7807654321', 'Home', default, NULL);
 
-/* Customer */
-insert into Customer (Customer_ID, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code, Email_Address, Account_Number, Credit_Card_Number)
-values (next value for Customer_Customer_ID_Seq, 'Smith', 'John', '123 Main St', 'Edmonton', 'Alberta', '12345', 'unknown@email.com', 'ACCT000001', '1111222233334444');
 
-insert into Customer (Customer_ID, Last_Name, First_Name, Address_Name, City, State_Name, Zip_Code, Email_Address, Account_Number, Credit_Card_Number)
-values (next value for Customer_Customer_ID_Seq, 'Doe', 'Jane', '456 Elm St', 'Calgary', 'Alberta', '67890', 'JaneD@email.com', 'ACCT000002', '5555666677778888');
+--
+-- Add test data
+--
 
-/* Customer Phone */
-insert into Customer_Phone values (1000, '7801112222', 'Mobile');
-insert into Customer_Phone values (1001, '7803334444', 'Home');
+--INSERT INTO <target_table> SELECT <columns> FROM <source_table>
+--INSERT INTO table_name (column1, column2, column3, ...)
+	--VALUES (value1, value2, value3, ...),
+	--	(value1, value2, value3, ...);
+--select getDate();
 
-/* Movie */
-insert into Movie (Movie_ID, Movie_Name, Movie_Type, Fee, Copy_Num, Copy_Rented, Movie_Rating)
-values (next value for Movie_Movie_ID_Seq, 'The Shawshank Redemption', 'Drama', 3.99, 5, 1, 5);
 
-insert into Movie (Movie_ID, Movie_Name, Movie_Type, Fee, Copy_Num, Copy_Rented, Movie_Rating)
-values (next value for Movie_Movie_ID_Seq, 'The Godfather', 'Drama', 4.99, 4, 2, 5);
+INSERT INTO Employee (EmployeeID, SSN, LastName, FirstName, StartDate)
+	VALUES ( NEXT VALUE FOR Employee_EmployeeID_Seq, '111222333', 'Smith', 'John', '2024-10-29');
 
-insert into Movie (Movie_ID, Movie_Name, Movie_Type, Fee, Copy_Num, Copy_Rented, Movie_Rating)
-values (next value for Movie_Movie_ID_Seq, 'The Dark Knight', 'Action', 4.49, 6, 3, 5);
+INSERT INTO EmployeePhone (EmployeeID, PhoneNum, PhoneType)
+	VALUES( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
+		'7807654321', 'Home' );
 
-/* Actor */
-insert into Actor (Last_Name, First_Name, Gender, Date_Of_Birth) values ('Freeman', 'Morgan', 'Male', '1937-06-01');
-insert into Actor (Last_Name, First_Name, Gender, Date_Of_Birth) values ('Brando', 'Marlon', 'Male', '1924-04-03');
-insert into Actor (Last_Name, First_Name, Gender, Date_Of_Birth) values ('Stone', 'Emma', 'Female', '1974-01-30');
 
-/* Appeared In */
-insert into Appeared_In values (1, 1000);
-insert into Appeared_In values (2, 1000);
-insert into Appeared_In values (3, 1001);
-insert into Appeared_In values (3, 1002); 
+INSERT INTO Customer (CustomerID, LastName, FirstName, Address, City, Province, 
+		PostalCode, Email, AccountNum, CreditCardNum, CreditCardExp, CreditCardCvv)
+	VALUES ( NEXT VALUE FOR Customer_CustomerID_Seq, 'Customer1', 'Last1', 
+		'11101 111st', 'Edmonton', 'AB', 'A1A1A1', 'cust1@gmail.com', 'ABC001', 
+		'1111222233334444', '1027', '111');
 
-/* Orders */
-insert into Orders (Order_ID, Customer_ID, Employee_ID, Movie_ID, Checkout_Date, Return_Date, Movie_Rating)
-values (next value for Orders_Order_ID_Seq, 1000, 1000, 1000, '2024-01-03 11:00:00', '2024-01-05 11:00:00', 5);
+INSERT INTO CustomerPhone (CustomerID, PhoneNum, PhoneType)
+	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
+		'7801111111', 'Home' );
 
-insert into Orders (Order_ID, Customer_ID, Employee_ID, Movie_ID, Checkout_Date, Return_Date, Movie_Rating)
-values (next value for Orders_Order_ID_Seq, 1001, 1001, 1001, '2024-01-04 12:00:00', NULL, NULL);
 
-/* Queue Up */
-insert into Queue_Up (Customer_ID, Movie_ID) values (1000, 1002);
-insert into Queue_Up (Customer_ID, Movie_ID) values (1001, 1000);
+INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
+	VALUES ( 'Die Hard', 'Action', 3.5, 5 );
 
-/* Rate Actor */
-insert into Rate_Actor values (1, 1000, 5);
-insert into Rate_Actor values (1, 1001, 4);
+INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
+	VALUES ('Die Hard 2', 'Action', 4.5, 4 );
+
+INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
+	VALUES ( 'Die Hard 3', 'Action', 5.5, 3 );
+
+
+INSERT INTO Actor (Name, Gender, DateOfBrith)
+	VALUES ( 'Bruce Wills', 'M', '1955-03-19' )
+
+INSERT INTO ActorAppear 
+	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'),
+		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
+
+INSERT INTO ActorAppear 
+	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'),
+		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
+
+INSERT INTO ActorAppear 
+	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'),
+		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
+
+
+INSERT INTO Customerqueue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 2)
+
+INSERT INTO Customerqueue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 3)
+
+
+INSERT INTO RentalRecord (EmployeeID, CustomerID, MovieID, MovieRate)
+	VALUES ( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
+		(SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'), 5 )
+
+INSERT INTO RentalRecord (EmployeeID, CustomerID, MovieID, MovieRate, CheckoutTime)
+	VALUES ( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
+		(SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'), 5, '2026-01-01' )
+
+INSERT INTO ActorRate (RentalRecordID, ActorID, ActorRate)
+	VALUES ( (SELECT RentalRecordID FROM RentalRecord
+		WHERE EmployeeID = (SELECT EmployeeID FROM Employee WHERE SSN = '111222333')
+		AND CustomerID = (SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com')
+		AND MovieID = (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard')
+		AND CheckoutTime = '2026-01-01'),
+		(SELECT ActorID FROM ActorAppear  
+		WHERE ActorID = (SELECT ActorID from Actor WHERE Name = 'Bruce Wills')
+		AND MovieID = (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard')), 
+		5 )
+
+
+--SELECT * FROM EmployeePhone;
+--SELECT * FROM Customer;
+--SELECT * FROM CustomerPhone;
+--SELECT * FROM Movie;
+--SELECT * FROM CustomerQueue;
+--SELECT * FROM Actor;
+--SELECT * FROM ActorAppear;
+--SELECT * FROM RentalRecord;
+--SELECT * FROM ActorRate;
+
+
+
+
