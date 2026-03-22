@@ -42,7 +42,7 @@ namespace Movie_Rental_System
             string email = Email_textbox.Text.Trim();
             string password = Password_textbox.Text.Trim();
 
-            myCommand.CommandText = "SELECT COUNT(*) FROM Employee e WHERE e.Email = @email AND e.password = @password";
+            myCommand.CommandText = "SELECT COUNT(*) FROM Employee e WHERE e.Email = @email AND e.password COLLATE SQL_Latin1_General_CP1_CS_AS = @password"; ;
             myCommand.Parameters.Clear();
             myCommand.Parameters.AddWithValue("@email", email);
             myCommand.Parameters.AddWithValue("@password", password);
@@ -54,8 +54,6 @@ namespace Movie_Rental_System
 
                 if (hits >= 1)
                 {
-                    MessageBox.Show("Successfully Logged In!");
-
                     MainMenu mainMenu = new MainMenu(myConnection);
                     
                     this.Hide();
