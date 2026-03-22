@@ -1,18 +1,18 @@
-﻿USE Proj2026W;
+﻿USE CMP291Project;
 
 --
 -- Remove test data
 --
 
-DELETE ActorRate;
-DELETE RentalRecord;
-DELETE ActorAppear;
+DELETE Actor_Rate;
+DELETE Rental_Record;
+DELETE Actor_Appear;
 DELETE Actor;
-DELETE CustomerQueue;
+DELETE Customer_Queue;
 DELETE Movie;
-DELETE CustomerPhone;
+DELETE Customer_Phone;
 DELETE Customer;
-DELETE EmployeePhone;
+DELETE Employee_Phone;
 DELETE Employee;
 
 
@@ -28,10 +28,10 @@ DELETE Employee;
 --select getDate();
 
 
-INSERT INTO Employee (EmployeeID, SSN, LastName, FirstName, StartDate)
-	VALUES ( NEXT VALUE FOR Employee_EmployeeID_Seq, '111222333', 'Smith', 'John', '2024-10-29');
+INSERT INTO Employee (EmployeeID, SSN, LastName, FirstName, Email, Password, StartDate)
+	VALUES ( NEXT VALUE FOR Employee_EmployeeID_Seq, '111222333', 'Smith', 'John', 'JSmith@email.com', 'password', '2024-10-29');
 
-INSERT INTO EmployeePhone (EmployeeID, PhoneNum, PhoneType)
+INSERT INTO Employee_Phone (EmployeeID, PhoneNum, PhoneType)
 	VALUES( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
 		'7807654321', 'Home' );
 
@@ -42,7 +42,7 @@ INSERT INTO Customer (CustomerID, LastName, FirstName, Address, City, Province,
 		'11101 111st', 'Edmonton', 'AB', 'A1A1A1', 'cust1@gmail.com', 'ABC001', 
 		'1111222233334444', '1027', '111');
 
-INSERT INTO CustomerPhone (CustomerID, PhoneNum, PhoneType)
+INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
 	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
 		'7801111111', 'Home' );
 
@@ -60,45 +60,45 @@ INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 INSERT INTO Actor (Name, Gender, DateOfBrith)
 	VALUES ( 'Bruce Wills', 'M', '1955-03-19' )
 
-INSERT INTO ActorAppear 
+INSERT INTO Actor_Appear 
 	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'),
 		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
 
-INSERT INTO ActorAppear 
+INSERT INTO Actor_Appear 
 	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'),
 		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
 
-INSERT INTO ActorAppear 
+INSERT INTO Actor_Appear 
 	VALUES ( (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'),
 		(SELECT ActorID FROM Actor WHERE Name = 'Bruce Wills') )
 
 
-INSERT INTO Customerqueue
+INSERT INTO Customer_queue
 	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 2)
 
-INSERT INTO Customerqueue
+INSERT INTO Customer_queue
 	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 3)
 
 
-INSERT INTO RentalRecord (EmployeeID, CustomerID, MovieID, MovieRate)
+INSERT INTO Rental_Record (EmployeeID, CustomerID, MovieID, MovieRate)
 	VALUES ( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
 		(SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'), 5 )
 
-INSERT INTO RentalRecord (EmployeeID, CustomerID, MovieID, MovieRate, CheckoutTime)
+INSERT INTO Rental_Record (EmployeeID, CustomerID, MovieID, MovieRate, CheckoutTime)
 	VALUES ( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),
 		(SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard'), 5, '2026-01-01' )
 
-INSERT INTO ActorRate (RentalRecordID, ActorID, ActorRate)
-	VALUES ( (SELECT RentalRecordID FROM RentalRecord
+INSERT INTO Actor_Rate (RentalRecordID, ActorID, ActorRate)
+	VALUES ( (SELECT RentalRecordID FROM Rental_Record
 		WHERE EmployeeID = (SELECT EmployeeID FROM Employee WHERE SSN = '111222333')
 		AND CustomerID = (SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com')
 		AND MovieID = (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard')
 		AND CheckoutTime = '2026-01-01'),
-		(SELECT ActorID FROM ActorAppear  
+		(SELECT ActorID FROM Actor_Appear  
 		WHERE ActorID = (SELECT ActorID from Actor WHERE Name = 'Bruce Wills')
 		AND MovieID = (SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard')), 
 		5 )
