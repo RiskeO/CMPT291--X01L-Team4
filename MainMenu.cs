@@ -1,18 +1,45 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Movie_Rental_System
 {
     public partial class MainMenu : Form
     {
-        public MainMenu()
+        public SqlConnection myConnection;
+        public SqlCommand myCommand;
+
+        public MainMenu(SqlConnection connection)
         {
             InitializeComponent();
+
+            myConnection = connection;
+            myCommand = new SqlCommand();
+            myCommand.Connection = myConnection;
+        }
+
+        private void Open_New_Form(Form form)
+        {
+            if (form == null) return;
+
+            try
+            {
+                this.Hide();
+
+                form.FormClosed += (s, args) => this.Show();
+                form.Show();
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show(ex.ToString(), "Error");
+            }
         }
 
         private void Customer_Button_Click(object sender, EventArgs e)
@@ -20,11 +47,8 @@ namespace Movie_Rental_System
             MessageBox.Show("Customer Page was not been added yet");
 
             /*
-            Customer customer = new Customer();
-            this.Hide();
-
-            customer.FormClosed += (s, args) => this.Show;
-            customer.Show();
+            Customer customer = new Customer(myConnection, myCommand, myReader);
+            Open_New_Form(customer);
             */
         }
 
@@ -33,11 +57,8 @@ namespace Movie_Rental_System
             MessageBox.Show("Movie Page was not been added yet");
 
             /*
-            Movie movie = new Movie();
-            this.Hide();
-
-            movie.FormClosed += (s, args) => this.Show;
-            movie.Show();
+            Movie movie = new Movie(myConnection, myCommand, myReader);
+            Open_New_Form(movie);
             */
         }
 
@@ -46,25 +67,15 @@ namespace Movie_Rental_System
             MessageBox.Show("Rental Page was not been added yet");
 
             /*
-            Rental rental = new rental();
-            this.Hide();
-
-            rental.FormClosed += (s, args) => this.Show;
-            rental.Show();
+            Rental rental = new Rental(myConnection, myCommand, myReader);
+            Open_New_Form(rental);
             */
         }
 
         private void Report_Button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Report Page was not been added yet");
-
-            /*
-            Report report = new Report();
-            this.Hide();
-
-            report.FormClosed += (s, args) => this.Show;
-            report.Show();
-            */
+            Report report = new Report(myConnection);
+            Open_New_Form(report);
         }
     }
 }

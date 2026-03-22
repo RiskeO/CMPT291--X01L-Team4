@@ -16,7 +16,7 @@ namespace Movie_Rental_System
         public SqlDataReader myReader;
 
         public Login()
-        {
+            {
             InitializeComponent();
 
             string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=CMP291Project;Trusted_Connection=yes;";
@@ -56,7 +56,7 @@ namespace Movie_Rental_System
                 {
                     MessageBox.Show("Successfully Logged In!");
 
-                    MainMenu mainMenu = new MainMenu();
+                    MainMenu mainMenu = new MainMenu(myConnection);
                     
                     this.Hide();
                     mainMenu.FormClosed += (s, args) => this.Close();
@@ -67,9 +67,9 @@ namespace Movie_Rental_System
                     MessageBox.Show("The username or password is not correct");
                 }
             }
-            catch (Exception e3)
+            catch (Exception ex)
             {
-                MessageBox.Show(e3.ToString(), "Error");
+                MessageBox.Show(ex.ToString(), "Error");
             }
         }
     }
