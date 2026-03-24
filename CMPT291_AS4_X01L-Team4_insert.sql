@@ -27,9 +27,8 @@ DELETE Employee;
 	--	(value1, value2, value3, ...);
 --select getDate();
 
-
-INSERT INTO Employee (EmployeeID, SSN, LastName, FirstName, Email, Password, StartDate)
-	VALUES ( NEXT VALUE FOR Employee_EmployeeID_Seq, '111222333', 'Smith', 'John', 'JSmith@email.com', 'password', '2024-10-29');
+INSERT INTO Employee (EmployeeID, SSN, LastName, FirstName, Email, PasswordHash, Salt, StartDate)
+	VALUES ( NEXT VALUE FOR Employee_EmployeeID_Seq, '111222333', 'Smith', 'John', 'JSmith@email.com', 0x18E640BD86BB691F7C0CE81CF693E8CE5415E5AF01B079D3E275905BCBD44A4C,  0xA7F3C91E4B82D6F10A5E73BC29D4816F, '2024-10-29');
 
 INSERT INTO Employee_Phone (EmployeeID, PhoneNum, PhoneType)
 	VALUES( (SELECT EmployeeID FROM Employee WHERE SSN = '111222333'),

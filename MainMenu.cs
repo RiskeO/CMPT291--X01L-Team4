@@ -37,7 +37,7 @@ namespace Movie_Rental_System
                 form.Show();
             }
             catch (Exception ex)
-            { 
+            {
                 MessageBox.Show(ex.ToString(), "Error");
             }
         }
@@ -76,6 +76,12 @@ namespace Movie_Rental_System
         {
             Report report = new Report(myConnection);
             Open_New_Form(report);
+        }
+
+        private void Logout_Button_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            Open_New_Form(login);
         }
     }
 }

@@ -33,12 +33,13 @@
             Movie_Button = new Button();
             Rental_Button = new Button();
             Report_Button = new Button();
+            Logout_Button = new Button();
             SuspendLayout();
             // 
             // Customer_Button
             // 
             Customer_Button.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Customer_Button.Location = new Point(250, 128);
+            Customer_Button.Location = new Point(250, 105);
             Customer_Button.Name = "Customer_Button";
             Customer_Button.Size = new Size(300, 60);
             Customer_Button.TabIndex = 0;
@@ -59,7 +60,7 @@
             // Movie_Button
             // 
             Movie_Button.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Movie_Button.Location = new Point(250, 196);
+            Movie_Button.Location = new Point(250, 173);
             Movie_Button.Name = "Movie_Button";
             Movie_Button.Size = new Size(300, 60);
             Movie_Button.TabIndex = 3;
@@ -70,7 +71,7 @@
             // Rental_Button
             // 
             Rental_Button.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Rental_Button.Location = new Point(250, 262);
+            Rental_Button.Location = new Point(250, 239);
             Rental_Button.Name = "Rental_Button";
             Rental_Button.Size = new Size(300, 60);
             Rental_Button.TabIndex = 4;
@@ -81,7 +82,7 @@
             // Report_Button
             // 
             Report_Button.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Report_Button.Location = new Point(250, 328);
+            Report_Button.Location = new Point(250, 305);
             Report_Button.Name = "Report_Button";
             Report_Button.Size = new Size(300, 60);
             Report_Button.TabIndex = 5;
@@ -89,11 +90,23 @@
             Report_Button.UseVisualStyleBackColor = true;
             Report_Button.Click += Report_Button_Click;
             // 
+            // Logout_Button
+            // 
+            Logout_Button.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Logout_Button.Location = new Point(250, 371);
+            Logout_Button.Name = "Logout_Button";
+            Logout_Button.Size = new Size(300, 60);
+            Logout_Button.TabIndex = 6;
+            Logout_Button.Text = "Logout";
+            Logout_Button.UseVisualStyleBackColor = true;
+            Logout_Button.Click += Logout_Button_Click;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 453);
+            Controls.Add(Logout_Button);
             Controls.Add(Report_Button);
             Controls.Add(Rental_Button);
             Controls.Add(Movie_Button);
@@ -115,5 +128,6 @@
         private Button Movie_Button;
         private Button Rental_Button;
         private Button Report_Button;
+        private Button Logout_Button;
     }
 }
