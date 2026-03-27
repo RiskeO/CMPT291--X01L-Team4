@@ -32,11 +32,16 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             Report_TabControl = new TabControl();
             Options_Tab = new TabPage();
-            Option5_Button = new Button();
-            Option4_Button = new Button();
-            Option3_Button = new Button();
-            Option2_Button = new Button();
-            Option1_Button = new Button();
+            Movie_Report_ComboBox = new ComboBox();
+            FamilyName = new Label();
+            FirstName = new Label();
+            Recommend_LastName_TextBox = new TextBox();
+            Recommend_FirstName_TextBox = new TextBox();
+            Recommend_Movie_Button = new Button();
+            Most_Frequent_Customers_Button = new Button();
+            Actor_Rating_Button = new Button();
+            Sort_Movies_Button = new Button();
+            Monthly_Sales_Report_Button = new Button();
             Data_Tab = new TabPage();
             Data = new DataGridView();
             Home_Button = new Button();
@@ -64,11 +69,16 @@
             // 
             // Options_Tab
             // 
-            Options_Tab.Controls.Add(Option5_Button);
-            Options_Tab.Controls.Add(Option4_Button);
-            Options_Tab.Controls.Add(Option3_Button);
-            Options_Tab.Controls.Add(Option2_Button);
-            Options_Tab.Controls.Add(Option1_Button);
+            Options_Tab.Controls.Add(Movie_Report_ComboBox);
+            Options_Tab.Controls.Add(FamilyName);
+            Options_Tab.Controls.Add(FirstName);
+            Options_Tab.Controls.Add(Recommend_LastName_TextBox);
+            Options_Tab.Controls.Add(Recommend_FirstName_TextBox);
+            Options_Tab.Controls.Add(Recommend_Movie_Button);
+            Options_Tab.Controls.Add(Most_Frequent_Customers_Button);
+            Options_Tab.Controls.Add(Actor_Rating_Button);
+            Options_Tab.Controls.Add(Sort_Movies_Button);
+            Options_Tab.Controls.Add(Monthly_Sales_Report_Button);
             Options_Tab.Location = new Point(4, 29);
             Options_Tab.Name = "Options_Tab";
             Options_Tab.Padding = new Padding(3);
@@ -77,60 +87,104 @@
             Options_Tab.Text = "Options";
             Options_Tab.UseVisualStyleBackColor = true;
             // 
-            // Option5_Button
+            // Movie_Report_ComboBox
             // 
-            Option5_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Option5_Button.Location = new Point(275, 330);
-            Option5_Button.Name = "Option5_Button";
-            Option5_Button.Size = new Size(250, 50);
-            Option5_Button.TabIndex = 4;
-            Option5_Button.Text = "Option5";
-            Option5_Button.UseVisualStyleBackColor = true;
-            Option5_Button.Click += Option5_Button_Click;
+            Movie_Report_ComboBox.Font = new Font("Segoe UI", 10F);
+            Movie_Report_ComboBox.FormattingEnabled = true;
+            Movie_Report_ComboBox.ItemHeight = 23;
+            Movie_Report_ComboBox.Items.AddRange(new object[] { "Movie Name", "Movie Type", "Rental Price", "Popular Movies" });
+            Movie_Report_ComboBox.Location = new Point(38, 220);
+            Movie_Report_ComboBox.Name = "Movie_Report_ComboBox";
+            Movie_Report_ComboBox.Size = new Size(250, 31);
+            Movie_Report_ComboBox.TabIndex = 9;
+            Movie_Report_ComboBox.SelectedIndexChanged += Movie_Report_ComboBox_SelectedIndexChanged;
             // 
-            // Option4_Button
+            // FamilyName
             // 
-            Option4_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Option4_Button.Location = new Point(275, 261);
-            Option4_Button.Name = "Option4_Button";
-            Option4_Button.Size = new Size(250, 50);
-            Option4_Button.TabIndex = 3;
-            Option4_Button.Text = "Option4";
-            Option4_Button.UseVisualStyleBackColor = true;
-            Option4_Button.Click += Option4_Button_Click;
+            FamilyName.AutoSize = true;
+            FamilyName.Location = new Point(566, 194);
+            FamilyName.Name = "FamilyName";
+            FamilyName.Size = new Size(95, 20);
+            FamilyName.TabIndex = 8;
+            FamilyName.Text = "Family Name";
             // 
-            // Option3_Button
+            // FirstName
             // 
-            Option3_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Option3_Button.Location = new Point(275, 193);
-            Option3_Button.Name = "Option3_Button";
-            Option3_Button.Size = new Size(250, 50);
-            Option3_Button.TabIndex = 2;
-            Option3_Button.Text = "Option3";
-            Option3_Button.UseVisualStyleBackColor = true;
-            Option3_Button.Click += Option3_Button_Click;
+            FirstName.AutoSize = true;
+            FirstName.Location = new Point(437, 191);
+            FirstName.Name = "FirstName";
+            FirstName.Size = new Size(80, 20);
+            FirstName.TabIndex = 7;
+            FirstName.Text = "First Name";
             // 
-            // Option2_Button
+            // Recommend_LastName_TextBox
             // 
-            Option2_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Option2_Button.Location = new Point(275, 125);
-            Option2_Button.Name = "Option2_Button";
-            Option2_Button.Size = new Size(250, 50);
-            Option2_Button.TabIndex = 1;
-            Option2_Button.Text = "Option2";
-            Option2_Button.UseVisualStyleBackColor = true;
-            Option2_Button.Click += Option2_Button_Click;
+            Recommend_LastName_TextBox.Location = new Point(566, 217);
+            Recommend_LastName_TextBox.Name = "Recommend_LastName_TextBox";
+            Recommend_LastName_TextBox.Size = new Size(121, 27);
+            Recommend_LastName_TextBox.TabIndex = 6;
             // 
-            // Option1_Button
+            // Recommend_FirstName_TextBox
             // 
-            Option1_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Option1_Button.Location = new Point(275, 56);
-            Option1_Button.Name = "Option1_Button";
-            Option1_Button.Size = new Size(250, 50);
-            Option1_Button.TabIndex = 0;
-            Option1_Button.Text = "Option1";
-            Option1_Button.UseVisualStyleBackColor = true;
-            Option1_Button.Click += Option1_Button_Click;
+            Recommend_FirstName_TextBox.Location = new Point(437, 217);
+            Recommend_FirstName_TextBox.Name = "Recommend_FirstName_TextBox";
+            Recommend_FirstName_TextBox.Size = new Size(121, 27);
+            Recommend_FirstName_TextBox.TabIndex = 5;
+            // 
+            // Recommend_Movie_Button
+            // 
+            Recommend_Movie_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Recommend_Movie_Button.Location = new Point(437, 250);
+            Recommend_Movie_Button.Name = "Recommend_Movie_Button";
+            Recommend_Movie_Button.Size = new Size(250, 50);
+            Recommend_Movie_Button.TabIndex = 4;
+            Recommend_Movie_Button.Text = "Recommended Movie";
+            Recommend_Movie_Button.UseVisualStyleBackColor = true;
+            Recommend_Movie_Button.Click += Recommended_Movie_Button_Click;
+            // 
+            // Most_Frequent_Customers_Button
+            // 
+            Most_Frequent_Customers_Button.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            Most_Frequent_Customers_Button.Location = new Point(437, 117);
+            Most_Frequent_Customers_Button.Name = "Most_Frequent_Customers_Button";
+            Most_Frequent_Customers_Button.Size = new Size(250, 50);
+            Most_Frequent_Customers_Button.TabIndex = 3;
+            Most_Frequent_Customers_Button.Text = "Most Frequent Customers";
+            Most_Frequent_Customers_Button.UseVisualStyleBackColor = true;
+            Most_Frequent_Customers_Button.Click += Most_Frequent_Customers_Button_Click;
+            // 
+            // Actor_Rating_Button
+            // 
+            Actor_Rating_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Actor_Rating_Button.Location = new Point(38, 268);
+            Actor_Rating_Button.Name = "Actor_Rating_Button";
+            Actor_Rating_Button.Size = new Size(250, 50);
+            Actor_Rating_Button.TabIndex = 2;
+            Actor_Rating_Button.Text = "Actor Rating";
+            Actor_Rating_Button.UseVisualStyleBackColor = true;
+            Actor_Rating_Button.Click += Actor_Rating_Button_Click;
+            // 
+            // Sort_Movies_Button
+            // 
+            Sort_Movies_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Sort_Movies_Button.Location = new Point(38, 174);
+            Sort_Movies_Button.Name = "Sort_Movies_Button";
+            Sort_Movies_Button.Size = new Size(250, 50);
+            Sort_Movies_Button.TabIndex = 1;
+            Sort_Movies_Button.Text = "Sort Movies By: ";
+            Sort_Movies_Button.UseVisualStyleBackColor = true;
+            Sort_Movies_Button.Click += Sort_Movies_Button_Click;
+            // 
+            // Monthly_Sales_Report_Button
+            // 
+            Monthly_Sales_Report_Button.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Monthly_Sales_Report_Button.Location = new Point(38, 105);
+            Monthly_Sales_Report_Button.Name = "Monthly_Sales_Report_Button";
+            Monthly_Sales_Report_Button.Size = new Size(250, 50);
+            Monthly_Sales_Report_Button.TabIndex = 0;
+            Monthly_Sales_Report_Button.Text = "Monthly Sales Reports";
+            Monthly_Sales_Report_Button.UseVisualStyleBackColor = true;
+            Monthly_Sales_Report_Button.Click += Monthly_Sales_Report_Button_Click;
             // 
             // Data_Tab
             // 
@@ -178,6 +232,7 @@
             Text = "Report";
             Report_TabControl.ResumeLayout(false);
             Options_Tab.ResumeLayout(false);
+            Options_Tab.PerformLayout();
             Data_Tab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Data).EndInit();
             ResumeLayout(false);
@@ -189,12 +244,17 @@
         private TabControl Report_TabControl;
         private TabPage Options_Tab;
         private TabPage Data_Tab;
-        private Button Option3_Button;
-        private Button Option2_Button;
-        private Button Option1_Button;
-        private Button Option5_Button;
-        private Button Option4_Button;
+        private Button Actor_Rating_Button;
+        private Button Sort_Movies_Button;
+        private Button Monthly_Sales_Report_Button;
+        private Button Recommend_Movie_Button;
+        private Button Most_Frequent_Customers_Button;
         private DataGridView Data;
         private Button Home_Button;
+        private TextBox Recommend_LastName_TextBox;
+        private TextBox Recommend_FirstName_TextBox;
+        private Label FirstName;
+        private Label FamilyName;
+        private ComboBox Movie_Report_ComboBox;
     }
 }

@@ -17,27 +17,34 @@ namespace Movie_Rental_System
         public SqlConnection myConnection;
         public SqlCommand myCommand;
         public SqlDataReader myReader;
+        private bool newLogin = true;
 
-        public Login()
-            {
+        public Login(SqlConnection connection = null)
+        {
             InitializeComponent();
 
-            string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=CMP291Project;Trusted_Connection=yes;";
-
-
-            try
+            if (connection == null)
             {
-                myConnection = new SqlConnection(connectionString); // Timeout in seconds
-                myConnection.Open(); // Open connection
+                string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=CMP291Project;Trusted_Connection=yes;";
 
-                myCommand = new SqlCommand();
-                myCommand.Connection = myConnection; // Link the command stream to the connection
+                try
+                {
+                    myConnection = new SqlConnection(connectionString); // Timeout in seconds
+                    myConnection.Open(); // Open connection
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString(), "Database Error");
+                    this.Close();
+                }
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show(e.ToString(), "Database Error");
-                this.Close();
-            }       
+                newLogin = false;
+            }
+
+            myCommand = new SqlCommand();
+            myCommand.Connection = myConnection; // Link the command stream to the connection
         }
 
         private byte[] HashPassword(string password, byte[] salt, int iterations = 100000, int hashSize = 32)
@@ -65,7 +72,7 @@ namespace Movie_Rental_System
             return true;
         }
 
-        private void Login_Button_Click_1(object sender, EventArgs e)
+        private void Login_Process()
         {
             string email = Email_textbox.Text.Trim();
             string password = Password_textbox.Text.Trim();
@@ -81,10 +88,12 @@ namespace Movie_Rental_System
                 myCommand.Parameters.AddWithValue("@email", email);
 
                 // Use ExecuteReader to read the hash and salt from the database
-                using (SqlDataReader reader = myCommand.ExecuteReader()) {
+                using (SqlDataReader reader = myCommand.ExecuteReader())
+                {
 
                     // If a record is found, compute the hash of the entered password using the retrieved salt
-                    if (reader.Read()){
+                    if (reader.Read())
+                    {
                         storedHash = (byte[])reader["PasswordHash"];
                         enteredHash = HashPassword(password, (byte[])reader["Salt"]);
                     }
@@ -109,11 +118,15 @@ namespace Movie_Rental_System
             {
                 // If the stored hash and the entered hash are both not null and match, open the main menu
                 if (storedHash != null && enteredHash != null && ByteArraysEqual(storedHash, enteredHash))
-                   {
+                {
+
                     // Create an instance of the main menu form and pass the database connection to it
                     MainMenu mainMenu = new MainMenu(myConnection);
-                    
-                    this.Hide();
+
+                    //First Login hide, otherwise close login page
+                    if (newLogin) this.Hide();
+                    else this.Close();
+
                     mainMenu.FormClosed += (s, args) => this.Close();
                     mainMenu.Show();
                 }
@@ -129,6 +142,19 @@ namespace Movie_Rental_System
             {
                 MessageBox.Show(ex.ToString(), "Form Error");
                 return;
+            }
+        }
+
+        private void Login_Button_Click_1(object sender, EventArgs e)
+        {
+            Login_Process();
+        }
+
+        private void Login_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Login_Process();
             }
         }
     }
