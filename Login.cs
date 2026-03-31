@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,11 +26,15 @@ namespace Movie_Rental_System
 
             if (connection == null)
             {
-                string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=CMP291Project;Trusted_Connection=yes;";
+                string connectionString = "Server=(localdb)\\MSSQLLocalDB;" +
+                         "Database=CMP291Project;" +
+                         "Trusted_Connection=True;" +
+                         "TrustServerCertificate=True;"; 
 
                 try
                 {
-                    myConnection = new SqlConnection(connectionString); // Timeout in seconds
+
+                    myConnection = new SqlConnection(connectionString);
                     myConnection.Open(); // Open connection
                 }
                 catch (Exception e)
