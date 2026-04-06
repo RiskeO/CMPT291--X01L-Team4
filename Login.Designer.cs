@@ -118,10 +118,12 @@
             Controls.Add(Password_textbox);
             Controls.Add(Email_textbox);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Login";
             Text = "Login";
+            KeyDown += Login_KeyDown_1;
             ResumeLayout(false);
             PerformLayout();
         }

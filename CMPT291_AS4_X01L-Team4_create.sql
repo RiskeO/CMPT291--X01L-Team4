@@ -120,7 +120,7 @@ CREATE TABLE Actor (
 ActorID INT IDENTITY(1,1),
 Name VARCHAR(100) NOT NULL,
 Gender NCHAR(1) NOT NULL CHECK( Gender='M' or Gender='F' ),
-DateOfBrith Date NOT NULL,
+DateOfBirth Date NOT NULL,
 PRIMARY KEY( ActorID )
 );
 

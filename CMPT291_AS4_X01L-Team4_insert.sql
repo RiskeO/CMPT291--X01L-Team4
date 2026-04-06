@@ -37,7 +37,7 @@ INSERT INTO Employee_Phone (EmployeeID, PhoneNum, PhoneType)
 
 INSERT INTO Customer (CustomerID, LastName, FirstName, Address, City, Province, 
 		PostalCode, Email, AccountNum, CreditCardNum, CreditCardExp, CreditCardCvv)
-	VALUES ( NEXT VALUE FOR Customer_CustomerID_Seq, 'Customer1', 'Last1', 
+	VALUES ( NEXT VALUE FOR Customer_CustomerID_Seq, 'Last1', 'Customer1', 
 		'11101 111st', 'Edmonton', 'AB', 'A1A1A1', 'cust1@gmail.com', 'ABC001', 
 		'1111222233334444', '1027', '111');
 
@@ -56,7 +56,7 @@ INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 	VALUES ( 'Die Hard 3', 'Action', 5.5, 3 );
 
 
-INSERT INTO Actor (Name, Gender, DateOfBrith)
+INSERT INTO Actor (Name, Gender, DateOfBirth)
 	VALUES ( 'Bruce Wills', 'M', '1955-03-19' )
 
 INSERT INTO Actor_Appear 
