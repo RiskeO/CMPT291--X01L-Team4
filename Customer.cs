@@ -115,5 +115,15 @@ namespace Movie_Rental_System
 
             Customer_Query(command, ID, parameters);
         }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProvinceTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

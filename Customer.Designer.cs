@@ -37,9 +37,34 @@
             LastNameLabel = new Label();
             FirstNameLabel = new Label();
             CustomerTabControl = new TabControl();
+            AddCustomerTab = new TabPage();
+            FirstNameLabel2 = new Label();
+            FirstNameTextBox2 = new TextBox();
+            LastNameLabel2 = new Label();
+            LastNameTextBox2 = new TextBox();
+            AddressLabel = new Label();
+            AddressTextBox = new TextBox();
+            CityLabel = new Label();
+            CityTextBox = new TextBox();
+            ProvinceLabel = new Label();
+            ProvinceTextBox = new TextBox();
+            PcodeLabel = new Label();
+            PcodeTextBox = new TextBox();
+            EmailLabel = new Label();
+            EmailTextBox = new TextBox();
+            AccNumLabel = new Label();
+            AccNumTextBox = new TextBox();
+            CcardNumLabel = new Label();
+            CcardNumTextBox = new TextBox();
+            CcardExpLabel = new Label();
+            CcardExpTextBox = new TextBox();
+            CcardCvvLabel = new Label();
+            CcardCvvTextBox = new TextBox();
+            AddCustomerButton = new Button();
             SearchCustomerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CustomerData).BeginInit();
             CustomerTabControl.SuspendLayout();
+            AddCustomerTab.SuspendLayout();
             SuspendLayout();
             // 
             // Home_Button
@@ -126,11 +151,233 @@
             // CustomerTabControl
             // 
             CustomerTabControl.Controls.Add(SearchCustomerTab);
+            CustomerTabControl.Controls.Add(AddCustomerTab);
             CustomerTabControl.Location = new Point(1, 0);
             CustomerTabControl.Name = "CustomerTabControl";
             CustomerTabControl.SelectedIndex = 0;
             CustomerTabControl.Size = new Size(678, 328);
             CustomerTabControl.TabIndex = 1;
+            // 
+            // AddCustomerTab
+            // 
+            AddCustomerTab.Controls.Add(AddCustomerButton);
+            AddCustomerTab.Controls.Add(CcardCvvTextBox);
+            AddCustomerTab.Controls.Add(CcardCvvLabel);
+            AddCustomerTab.Controls.Add(CcardExpTextBox);
+            AddCustomerTab.Controls.Add(CcardExpLabel);
+            AddCustomerTab.Controls.Add(CcardNumTextBox);
+            AddCustomerTab.Controls.Add(CcardNumLabel);
+            AddCustomerTab.Controls.Add(AccNumTextBox);
+            AddCustomerTab.Controls.Add(AccNumLabel);
+            AddCustomerTab.Controls.Add(EmailTextBox);
+            AddCustomerTab.Controls.Add(EmailLabel);
+            AddCustomerTab.Controls.Add(PcodeTextBox);
+            AddCustomerTab.Controls.Add(PcodeLabel);
+            AddCustomerTab.Controls.Add(ProvinceTextBox);
+            AddCustomerTab.Controls.Add(ProvinceLabel);
+            AddCustomerTab.Controls.Add(CityTextBox);
+            AddCustomerTab.Controls.Add(CityLabel);
+            AddCustomerTab.Controls.Add(AddressTextBox);
+            AddCustomerTab.Controls.Add(AddressLabel);
+            AddCustomerTab.Controls.Add(LastNameTextBox2);
+            AddCustomerTab.Controls.Add(LastNameLabel2);
+            AddCustomerTab.Controls.Add(FirstNameTextBox2);
+            AddCustomerTab.Controls.Add(FirstNameLabel2);
+            AddCustomerTab.Location = new Point(4, 24);
+            AddCustomerTab.Name = "AddCustomerTab";
+            AddCustomerTab.Padding = new Padding(3);
+            AddCustomerTab.Size = new Size(670, 300);
+            AddCustomerTab.TabIndex = 1;
+            AddCustomerTab.Text = "Add";
+            AddCustomerTab.UseVisualStyleBackColor = true;
+            // 
+            // FirstNameLabel2
+            // 
+            FirstNameLabel2.AutoSize = true;
+            FirstNameLabel2.Location = new Point(3, 3);
+            FirstNameLabel2.Name = "FirstNameLabel2";
+            FirstNameLabel2.Size = new Size(64, 15);
+            FirstNameLabel2.TabIndex = 0;
+            FirstNameLabel2.Text = "First Name";
+            FirstNameLabel2.Click += label1_Click_1;
+            // 
+            // FirstNameTextBox2
+            // 
+            FirstNameTextBox2.Location = new Point(5, 19);
+            FirstNameTextBox2.Name = "FirstNameTextBox2";
+            FirstNameTextBox2.Size = new Size(100, 23);
+            FirstNameTextBox2.TabIndex = 1;
+            // 
+            // LastNameLabel2
+            // 
+            LastNameLabel2.AutoSize = true;
+            LastNameLabel2.Location = new Point(111, 3);
+            LastNameLabel2.Name = "LastNameLabel2";
+            LastNameLabel2.Size = new Size(63, 15);
+            LastNameLabel2.TabIndex = 2;
+            LastNameLabel2.Text = "Last Name";
+            // 
+            // LastNameTextBox2
+            // 
+            LastNameTextBox2.Location = new Point(111, 19);
+            LastNameTextBox2.Name = "LastNameTextBox2";
+            LastNameTextBox2.Size = new Size(100, 23);
+            LastNameTextBox2.TabIndex = 3;
+            // 
+            // AddressLabel
+            // 
+            AddressLabel.AutoSize = true;
+            AddressLabel.Location = new Point(217, 3);
+            AddressLabel.Name = "AddressLabel";
+            AddressLabel.Size = new Size(49, 15);
+            AddressLabel.TabIndex = 4;
+            AddressLabel.Text = "Address";
+            // 
+            // AddressTextBox
+            // 
+            AddressTextBox.Location = new Point(217, 19);
+            AddressTextBox.Name = "AddressTextBox";
+            AddressTextBox.Size = new Size(100, 23);
+            AddressTextBox.TabIndex = 5;
+            // 
+            // CityLabel
+            // 
+            CityLabel.AutoSize = true;
+            CityLabel.Location = new Point(323, 3);
+            CityLabel.Name = "CityLabel";
+            CityLabel.Size = new Size(28, 15);
+            CityLabel.TabIndex = 6;
+            CityLabel.Text = "City";
+            // 
+            // CityTextBox
+            // 
+            CityTextBox.Location = new Point(323, 19);
+            CityTextBox.Name = "CityTextBox";
+            CityTextBox.Size = new Size(100, 23);
+            CityTextBox.TabIndex = 7;
+            // 
+            // ProvinceLabel
+            // 
+            ProvinceLabel.AutoSize = true;
+            ProvinceLabel.Location = new Point(429, 3);
+            ProvinceLabel.Name = "ProvinceLabel";
+            ProvinceLabel.Size = new Size(53, 15);
+            ProvinceLabel.TabIndex = 8;
+            ProvinceLabel.Text = "Province";
+            // 
+            // ProvinceTextBox
+            // 
+            ProvinceTextBox.Location = new Point(429, 19);
+            ProvinceTextBox.Name = "ProvinceTextBox";
+            ProvinceTextBox.Size = new Size(100, 23);
+            ProvinceTextBox.TabIndex = 9;
+            ProvinceTextBox.TextChanged += ProvinceTextBox_TextChanged;
+            // 
+            // PcodeLabel
+            // 
+            PcodeLabel.AutoSize = true;
+            PcodeLabel.Location = new Point(535, 3);
+            PcodeLabel.Name = "PcodeLabel";
+            PcodeLabel.Size = new Size(70, 15);
+            PcodeLabel.TabIndex = 10;
+            PcodeLabel.Text = "Postal Code";
+            // 
+            // PcodeTextBox
+            // 
+            PcodeTextBox.Location = new Point(535, 19);
+            PcodeTextBox.Name = "PcodeTextBox";
+            PcodeTextBox.Size = new Size(100, 23);
+            PcodeTextBox.TabIndex = 11;
+            // 
+            // EmailLabel
+            // 
+            EmailLabel.AutoSize = true;
+            EmailLabel.Location = new Point(5, 55);
+            EmailLabel.Name = "EmailLabel";
+            EmailLabel.Size = new Size(36, 15);
+            EmailLabel.TabIndex = 12;
+            EmailLabel.Text = "Email";
+            // 
+            // EmailTextBox
+            // 
+            EmailTextBox.Location = new Point(5, 73);
+            EmailTextBox.Name = "EmailTextBox";
+            EmailTextBox.Size = new Size(100, 23);
+            EmailTextBox.TabIndex = 13;
+            // 
+            // AccNumLabel
+            // 
+            AccNumLabel.AutoSize = true;
+            AccNumLabel.Location = new Point(111, 55);
+            AccNumLabel.Name = "AccNumLabel";
+            AccNumLabel.Size = new Size(62, 15);
+            AccNumLabel.TabIndex = 14;
+            AccNumLabel.Text = "Account #";
+            // 
+            // AccNumTextBox
+            // 
+            AccNumTextBox.Location = new Point(111, 73);
+            AccNumTextBox.Name = "AccNumTextBox";
+            AccNumTextBox.Size = new Size(100, 23);
+            AccNumTextBox.TabIndex = 15;
+            // 
+            // CcardNumLabel
+            // 
+            CcardNumLabel.AutoSize = true;
+            CcardNumLabel.Location = new Point(217, 55);
+            CcardNumLabel.Name = "CcardNumLabel";
+            CcardNumLabel.Size = new Size(77, 15);
+            CcardNumLabel.TabIndex = 16;
+            CcardNumLabel.Text = "Credit Card #";
+            // 
+            // CcardNumTextBox
+            // 
+            CcardNumTextBox.Location = new Point(217, 73);
+            CcardNumTextBox.Name = "CcardNumTextBox";
+            CcardNumTextBox.Size = new Size(100, 23);
+            CcardNumTextBox.TabIndex = 17;
+            // 
+            // CcardExpLabel
+            // 
+            CcardExpLabel.AutoSize = true;
+            CcardExpLabel.Location = new Point(323, 55);
+            CcardExpLabel.Name = "CcardExpLabel";
+            CcardExpLabel.Size = new Size(90, 15);
+            CcardExpLabel.TabIndex = 18;
+            CcardExpLabel.Text = "Credit Card EXP";
+            // 
+            // CcardExpTextBox
+            // 
+            CcardExpTextBox.Location = new Point(323, 73);
+            CcardExpTextBox.Name = "CcardExpTextBox";
+            CcardExpTextBox.Size = new Size(100, 23);
+            CcardExpTextBox.TabIndex = 19;
+            // 
+            // CcardCvvLabel
+            // 
+            CcardCvvLabel.AutoSize = true;
+            CcardCvvLabel.Location = new Point(429, 55);
+            CcardCvvLabel.Name = "CcardCvvLabel";
+            CcardCvvLabel.Size = new Size(90, 15);
+            CcardCvvLabel.TabIndex = 20;
+            CcardCvvLabel.Text = "Credit Card Cvv";
+            // 
+            // CcardCvvTextBox
+            // 
+            CcardCvvTextBox.Location = new Point(429, 73);
+            CcardCvvTextBox.Name = "CcardCvvTextBox";
+            CcardCvvTextBox.Size = new Size(100, 23);
+            CcardCvvTextBox.TabIndex = 21;
+            // 
+            // AddCustomerButton
+            // 
+            AddCustomerButton.BackColor = Color.DarkGray;
+            AddCustomerButton.Location = new Point(535, 72);
+            AddCustomerButton.Name = "AddCustomerButton";
+            AddCustomerButton.Size = new Size(100, 23);
+            AddCustomerButton.TabIndex = 22;
+            AddCustomerButton.Text = "Add Customer";
+            AddCustomerButton.UseVisualStyleBackColor = false;
             // 
             // Customer
             // 
@@ -145,6 +392,8 @@
             SearchCustomerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CustomerData).EndInit();
             CustomerTabControl.ResumeLayout(false);
+            AddCustomerTab.ResumeLayout(false);
+            AddCustomerTab.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -159,5 +408,29 @@
         private Label FirstNameLabel;
         private TabControl CustomerTabControl;
         private Button SearchButton;
+        private TabPage AddCustomerTab;
+        private Label FirstNameLabel2;
+        private Label AddressLabel;
+        private TextBox LastNameTextBox2;
+        private Label LastNameLabel2;
+        private TextBox FirstNameTextBox2;
+        private TextBox ProvinceTextBox;
+        private Label ProvinceLabel;
+        private TextBox CityTextBox;
+        private Label CityLabel;
+        private TextBox AddressTextBox;
+        private Label EmailLabel;
+        private TextBox PcodeTextBox;
+        private Label PcodeLabel;
+        private TextBox CcardExpTextBox;
+        private Label CcardExpLabel;
+        private TextBox CcardNumTextBox;
+        private Label CcardNumLabel;
+        private TextBox AccNumTextBox;
+        private Label AccNumLabel;
+        private TextBox EmailTextBox;
+        private Button AddCustomerButton;
+        private TextBox CcardCvvTextBox;
+        private Label CcardCvvLabel;
     }
 }
