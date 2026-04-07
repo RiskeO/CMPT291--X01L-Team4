@@ -253,7 +253,7 @@ INSERT INTO Customer_queue
 
 INSERT INTO Customer_queue
 	VALUES ( (SELECT CustomerID FROM Customer WHERE AccountNum = 'ABC005'),
-		(SELECT MovieID FROM Movie WHERE MovieName = 'Titanic'), 2)
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Titanic'), 1)
 
 INSERT INTO Customer_queue
 	VALUES ( (SELECT CustomerID FROM Customer WHERE AccountNum = 'ABC006'),
