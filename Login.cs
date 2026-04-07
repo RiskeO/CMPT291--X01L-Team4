@@ -18,7 +18,6 @@ namespace Movie_Rental_System
         public SqlConnection myConnection;
         public SqlCommand myCommand;
         public SqlDataReader myReader;
-        private bool newLogin = true;
 
         public Login(SqlConnection connection = null)
         {
@@ -45,7 +44,7 @@ namespace Movie_Rental_System
             }
             else
             {
-                newLogin = false;
+                myConnection = connection;
             }
 
             myCommand = new SqlCommand();
@@ -127,13 +126,11 @@ namespace Movie_Rental_System
 
                     // Create an instance of the main menu form and pass the database connection to it
                     MainMenu mainMenu = new MainMenu(myConnection);
-
-                    //First Login hide, otherwise close login page
-                    if (newLogin) this.Hide();
-                    else this.Close();
-
+                 
                     mainMenu.FormClosed += (s, args) => this.Close();
                     mainMenu.Show();
+                    this.Hide();
+
                 }
                 // If the hashes do not match, show an error message
                 else

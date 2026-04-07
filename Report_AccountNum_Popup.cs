@@ -118,5 +118,10 @@ namespace Movie_Rental_System
                 e.Handled = true; // Prevents the default "ding" sound
             }
         }
+
+        private void Recommend_LastName_TextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

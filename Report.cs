@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Movie_Rental_System
 {
@@ -81,12 +82,12 @@ namespace Movie_Rental_System
         {
             string year = Sale_Report_Year_Picker.Value.Year.ToString();
 
-            string command = " SELECT DATEPART(YEAR, r.CheckoutTime) as [Year], DATENAME(MONTH, r.CheckoutTime) as [Month], SUM(m.Fee) as [Total Made] " +
+            string command = " SELECT YEAR(r.CheckoutTime) as [Year], MONTH(r.CheckoutTime) as [Month], SUM(m.Fee) as [Total Made] " +
                             "FROM Rental_Record r, Movie m " +
                             "WHERE r.MovieID = m.MovieID " +
-                            "AND DATEPART(YEAR, r.CheckoutTime) = @year " +
-                            "GROUP BY DATEPART(YEAR, r.CheckoutTime), DATENAME(MONTH, r.CheckoutTime), MONTH(r.CheckoutTime), m.Fee " +
-                            "ORDER BY DATEPART(YEAR, r.CheckoutTime),DATEPART(MONTH, r.CheckoutTime)";
+                            "AND YEAR(r.CheckoutTime) = @year " +
+                            "GROUP BY YEAR(r.CheckoutTime), MONTH(r.CheckoutTime) " +
+                            "ORDER BY YEAR(r.CheckoutTime),MONTH(r.CheckoutTime)";
             string[] ID = { "Year", "Month", "Total Made" };
             var parameters = new Dictionary<string, string> {
                 { "@year", year }
@@ -97,60 +98,69 @@ namespace Movie_Rental_System
 
         private void Sort_Movies_Button_Click(object sender, EventArgs e)
         {
-            string command = " SELECT TOP(5) WITH TIES m.MovieName [Name], m.MovieType [Type], AVG(r.MovieRate) AS [Rating], m.Fee, (m.NumOfCopy - m.NumOfRented) AS [Available Copies] " +
+            string year = Sort_Movie_TimePicker.Value.Year.ToString();
+            string month = Sort_Movie_TimePicker.Value.Month.ToString();
+            string type = Movie_Report_ComboBox.Text.Trim();
+
+            string command = " SELECT TOP(5) WITH TIES m.MovieName [Name], m.MovieType [Type], AVG(r.MovieRate) AS [Rating], MAX(m.Fee) AS [Fee], (m.NumOfCopy - m.NumOfRented) AS [Available Copies] " +
                 "FROM Movie m, Rental_Record r " +
                 "WHERE m.MovieID = r.MovieID " +
-                "GROUP BY r.MovieID, m.MovieName, m.MovieType, r.MovieRate, m.Fee, m.NumOfCopy, m.NumOfRented ";
-            if (Movie_Report_ComboBox.SelectedIndex == 0)
-            {
-                command += "ORDER BY m.MovieType DESC";
-            }
-            else if (Movie_Report_ComboBox.SelectedIndex == 1)
-            {
-                command += "ORDER BY m.MovieName DESC";
-            }
-            else if (Movie_Report_ComboBox.SelectedIndex == 2)
-            {
-                command += "ORDER BY m.Fee DESC";
-            }
-            else if (Movie_Report_ComboBox.SelectedIndex == 3)
-            {
-                command += "ORDER BY Rating DESC";
-            }
-            else
-            {
-                command += "ORDER BY r.MovieID DESC";
-            }
+                "   AND YEAR(r.CheckoutTime) = @year " +
+                "   AND MONTH(r.CheckoutTime) = @month " +
+                "   AND m.MovieType = @type " +
+                "GROUP BY m.MovieID, m.MovieName, m.MovieType, m.NumOfCopy, m.NumOfRented " +
+                "ORDER BY [Rating] DESC";
+            
 
             string[] ID = { "Name", "Type", "Rating", "Fee", "Available Copies" };
-            var parameters = new Dictionary<string, string> { };
+            var parameters = new Dictionary<string, string> {
+                {"@month", month },
+                {"@year", year },
+                {"@type", type }
+            };
 
             Report_Query(command, ID, parameters);
         }
 
         private void Actor_Rating_Button_Click(object sender, EventArgs e)
         {
-            string command = " SELECT TOP(5) WITH TIES a.ActorID AS [Actor ID], a.Name, r.ActorRate AS [Rating] " +
-                            "FROM Actor_Rate r, Actor a " +
+            string year = Actor_Rating_TimePicker.Value.Year.ToString();
+            string month = Actor_Rating_TimePicker.Value.Month.ToString();
+
+            string command = " SELECT TOP(5) WITH TIES a.ActorID AS [Actor ID], a.Name, AVG(r.ActorRate) AS [Rating] " +
+                            "FROM Actor_Rate r, Rental_Record rr, Actor a " +
                             "WHERE r.ActorID = a.ActorID " +
-                            "GROUP BY r.ActorRate, a.Name, a.ActorID " +
-                            "ORDER BY r.ActorRate DESC";
+                            "   AND r.RentalRecordID = rr.RentalRecordID " +
+                            "   AND YEAR(rr.CheckoutTime) = @year " +
+                            "   AND MONTH(rr.CheckoutTime) = @month " +
+                            "GROUP BY a.Name, a.ActorID " +
+                            "ORDER BY [Rating] DESC";
             string[] ID = { "Actor ID", "Name", "Rating" };
-            var parameters = new Dictionary<string, string> { };
+            var parameters = new Dictionary<string, string> {
+                {"@month", month },
+                {"@year", year }
+            };
 
             Report_Query(command, ID, parameters);
         }
 
         private void Most_Frequent_Customers_Button_Click(object sender, EventArgs e)
         {
-            //Use Account Number & If ties has to go over 5
-            string command = " SELECT TOP(5) WITH TIES c.AccountNum AS [Account Number], c.FirstName [First Name], c.LastName [Family Name], COUNT(r.CustomerID) AS [Orders] " +
+            string year = Frequent_Customer_TimePicker.Value.Year.ToString();
+            string month = Frequent_Customer_TimePicker.Value.Month.ToString();
+
+            string command = " SELECT TOP(5) WITH TIES c.AccountNum AS [Account Number], c.FirstName [First Name], c.LastName [Family Name], COUNT(*) AS [Orders] " +
                 "FROM Rental_Record r, Customer c " +
                 "Where r.CustomerID = c.CustomerID " +
-                "GROUP BY c.AccountNum, c.FirstName, c.LastName, r.CustomerID " +
+                "   AND YEAR(r.CheckoutTime) = @year " +
+                "   AND MONTH(r.CheckoutTime) = @month " +
+                "GROUP BY c.AccountNum, c.FirstName, c.LastName " +
                 "ORDER BY [Orders] DESC ";
             string[] ID = { "Account Number", "First Name", "Family Name", "Orders" };
-            var parameters = new Dictionary<string, string> { };
+            var parameters = new Dictionary<string, string> {
+                {"@month", month },
+                {"@year", year }
+            };
 
             Report_Query(command, ID, parameters);
         }
@@ -174,7 +184,7 @@ namespace Movie_Rental_System
                 MessageBox.Show("No customer selected.");
                 return;
             }
-            string command = " SELECT TOP (5) WITH TIES m.MovieName [Name], m.MovieType [Type], AVG(r.MovieRate) AS Rating, m.Fee, " +
+            string command = " SELECT TOP (5) WITH TIES m.MovieName [Name], m.MovieType [Type], AVG(r.MovieRate) AS Rating, MAX(m.Fee) AS [Fee], " +
                 "(m.NumOfCopy - m.NumOfRented) AS [Available Copies] " +
                 "FROM Movie m, Rental_Record r, " +
                     "( SELECT TOP (1) m.MovieType, COUNT(*) AS NumOfMovie " +
@@ -186,8 +196,8 @@ namespace Movie_Rental_System
                     " ORDER BY NumOfMovie DESC) type " +
                 "WHERE m.MovieID = r.MovieID " +
                 "AND m.MovieType = type.MovieType " +
-                "GROUP BY m.MovieID, m.MovieName, m.MovieType, m.Fee, m.NumOfCopy, m.NumOfRented " +
-                "ORDER BY Rating DESC";
+                "GROUP BY m.MovieID, m.MovieName, m.MovieType, m.NumOfCopy, m.NumOfRented " +
+                "ORDER BY [Rating] DESC";
 
             string[] ID = { "Name", "Type", "Rating", "Fee", "Available Copies" };
             var parameters = new Dictionary<string, string> {
