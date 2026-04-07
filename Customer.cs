@@ -74,8 +74,48 @@ namespace Movie_Rental_System
             {
                 MessageBox.Show(ex.ToString(), "Error");
             }
+        }
 
-            //this.Report_TabControl.SelectedIndex = 1;
+        private void Customer_Add(string sql_command, Dictionary<string, string> parameters)
+        {
+            bool openedHere = false;
+            try
+            {
+                myCommand.Parameters.Clear();
+                myCommand.CommandText = sql_command;
+
+                foreach (KeyValuePair<string, string> parameter in parameters)
+                {
+                    myCommand.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+
+                if (myConnection.State != ConnectionState.Open)
+                {
+                myConnection.Open();
+                    openedHere = true;
+                }
+
+                int rowsAffected = myCommand.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Customer added successfully.", "Success");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add customer.", "Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+            finally
+            {
+                if (openedHere && myConnection.State == ConnectionState.Open)
+                {
+                    myConnection.Close();
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -100,20 +140,29 @@ namespace Movie_Rental_System
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            string LastName = LastNameTextBox.Text;
-            string FirstName = FirstNameTextBox.Text;
+            if (LastNameTextBox.Text == "" || FirstNameTextBox.Text == "")
+            {
+                MessageBox.Show("Please enter both a first name and last name to search for a customer.", "Error");
+                return;
+            }
 
-            string command = " SELECT AccountNum [Account #], FirstName [First Name], LastName [Family Name], Address [Address], City [City], CreationDate [Date Added]" +
-                "FROM Customer " +
-                "WHERE LastName LIKE @LastName AND FirstName LIKE @FirstName";
+            else
+            {
+                string LastName = LastNameTextBox.Text;
+                string FirstName = FirstNameTextBox.Text;
 
-            string[] ID = { "Account #", "First Name", "Family Name", "Address", "City", "Date Added" };
-            var parameters = new Dictionary<string, string> {
+                string command = " SELECT AccountNum [Account #], FirstName [First Name], LastName [Family Name], Address [Address], City [City], CreationDate [Date Added]" +
+                    "FROM Customer " +
+                    "WHERE LastName LIKE @LastName AND FirstName LIKE @FirstName";
+
+                string[] ID = { "Account #", "First Name", "Family Name", "Address", "City", "Date Added" };
+                var parameters = new Dictionary<string, string> {
                 {"@LastName", "%" + LastName + "%" },
                 {"@FirstName", "%" + FirstName + "%" }
-            };
+                };
 
-            Customer_Query(command, ID, parameters);
+                Customer_Query(command, ID, parameters);
+            }
         }
 
         private void label1_Click_1(object sender, EventArgs e)
@@ -124,6 +173,49 @@ namespace Movie_Rental_System
         private void ProvinceTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void AddCustomerButton_Click(object sender, EventArgs e)
+        {
+            if (FirstNameTextBox2.Text == "" || LastNameTextBox2.Text == "" || EmailTextBox.Text == "" || 
+                AccNumTextBox.Text == "" || CcardNumTextBox.Text == "" || CcardExpTextBox.Text == "" ||
+                CcardCvvTextBox.Text == "")
+            {
+                MessageBox.Show("Please fill in all fields  with * to add a customer.", "Error");
+                return;
+            }
+            else
+            {
+                string LastName = LastNameTextBox2.Text;
+                string FirstName = FirstNameTextBox2.Text;
+                string Address = AddressTextBox.Text;
+                string City = CityTextBox.Text;
+                string Province = ProvinceTextBox.Text;
+                string Pcode = PcodeTextBox.Text;
+                string Email = EmailTextBox.Text;
+                string AccNum = AccNumTextBox.Text;
+                string CcardNum = CcardNumTextBox.Text;
+                string CcardExp = CcardExpTextBox.Text;
+                string CcardCvv = CcardCvvTextBox.Text;
+
+                string command = "INSERT INTO Customer (CustomerID, LastName, FirstName, Address, City, Province, PostalCode, Email, AccountNum, CreditCardNum, CreditCardExp, CreditCardCvv) " +
+                    "VALUES (NEXT VALUE FOR Customer_CustomerID_Seq, @LastName, @FirstName, @Address, @City, @Province, @Pcode, @Email, @AccNum, @CcardNum, @CcardExp, @CcardCvv)";
+                var parameters = new Dictionary<string, string> {
+                {"@LastName", LastName },
+                {"@FirstName", FirstName },
+                {"@Address", Address },
+                {"@City", City },
+                {"@Province", Province },
+                {"@Pcode", Pcode },
+                {"@Email", Email },
+                {"@AccNum", AccNum },
+                {"@CcardNum", CcardNum },
+                {"@CcardExp", CcardExp },
+                {"@CcardCvv", CcardCvv }
+                };
+
+                Customer_Add(command, parameters);
+            }
         }
     }
 }
