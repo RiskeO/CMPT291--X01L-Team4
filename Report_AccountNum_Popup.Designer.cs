@@ -62,6 +62,7 @@
             Recommend_LastName_TextBox.Name = "Recommend_LastName_TextBox";
             Recommend_LastName_TextBox.Size = new Size(228, 27);
             Recommend_LastName_TextBox.TabIndex = 10;
+            Recommend_LastName_TextBox.TextChanged += Recommend_LastName_TextBox_TextChanged;
             // 
             // Recommend_FirstName_TextBox
             // 
@@ -120,7 +121,7 @@
             KeyPreview = true;
             Name = "Report_Select_Customer_ID";
             Text = "Report_Select_Customer_ID";
-            KeyDown += this.Report_Select_Customer_ID_KeyDown;
+            KeyDown += Report_Select_Customer_ID_KeyDown;
             ((System.ComponentModel.ISupportInitialize)Customer_GridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
