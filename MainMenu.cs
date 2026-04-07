@@ -44,12 +44,12 @@ namespace Movie_Rental_System
 
         private void Customer_Button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Customer Page was not been added yet");
+            //MessageBox.Show("Customer Page was not been added yet");
 
-            /*
-            Customer customer = new Customer(myConnection, myCommand, myReader);
+
+            Customer customer = new Customer(myConnection);
             Open_New_Form(customer);
-            */
+
         }
 
         private void Movie_Button_Click(object sender, EventArgs e)
