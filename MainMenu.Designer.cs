@@ -56,6 +56,7 @@
             label2.Size = new Size(237, 54);
             label2.TabIndex = 2;
             label2.Text = "Main Menu";
+            label2.Click += label2_Click;
             // 
             // Movie_Button
             // 

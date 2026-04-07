@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Input;
+using test2;
 
 namespace Movie_Rental_System
 {
@@ -54,21 +55,17 @@ namespace Movie_Rental_System
 
         private void Movie_Button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Movie Page was not been added yet");
-
-            /*
-            Movie movie = new Movie(myConnection, myCommand, myReader);
+            Tab movie = new Tab();
             Open_New_Form(movie);
-            */
         }
 
         private void Rental_Button_Click(object sender, EventArgs e)
         {
 
-            
+
             Rental rental = new Rental(myConnection);
             Open_New_Form(rental);
-            
+
         }
 
         private void Report_Button_Click(object sender, EventArgs e)
@@ -83,6 +80,11 @@ namespace Movie_Rental_System
             login.FormClosed += (s, args) => this.Close();
             login.Show();
             this.Hide();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
