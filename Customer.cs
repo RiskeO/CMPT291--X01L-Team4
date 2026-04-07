@@ -91,7 +91,7 @@ namespace Movie_Rental_System
 
                 if (myConnection.State != ConnectionState.Open)
                 {
-                myConnection.Open();
+                    myConnection.Open();
                     openedHere = true;
                 }
 
@@ -103,6 +103,48 @@ namespace Movie_Rental_System
                 else
                 {
                     MessageBox.Show("Failed to add customer.", "Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+            finally
+            {
+                if (openedHere && myConnection.State == ConnectionState.Open)
+                {
+                    myConnection.Close();
+                }
+            }
+        }
+
+        private void Customer_Delete(string sql_command, Dictionary<string, string> parameters)
+        {
+            bool openedHere = false;
+            try
+            {
+                myCommand.Parameters.Clear();
+                myCommand.CommandText = sql_command;
+
+                foreach (KeyValuePair<string, string> parameter in parameters)
+                {
+                    myCommand.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+
+                if (myConnection.State != ConnectionState.Open)
+                {
+                    myConnection.Open();
+                    openedHere = true;
+                }
+
+                int rowsAffected = myCommand.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Customer deleted successfully.", "Success");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete customer.", "Error");
                 }
             }
             catch (Exception ex)
@@ -151,14 +193,14 @@ namespace Movie_Rental_System
                 string LastName = LastNameTextBox.Text;
                 string FirstName = FirstNameTextBox.Text;
 
-                string command = " SELECT AccountNum [Account #], FirstName [First Name], LastName [Family Name], Address [Address], City [City], CreationDate [Date Added]" +
+                string command = " SELECT AccountNum [Account #], CustomerID [CustomerID], Address [Address], City [City], CreationDate [Date Added]" +
                     "FROM Customer " +
                     "WHERE LastName LIKE @LastName AND FirstName LIKE @FirstName";
 
-                string[] ID = { "Account #", "First Name", "Family Name", "Address", "City", "Date Added" };
+                string[] ID = { "Account #", "CustomerID", "Address", "City", "Date Added" };
                 var parameters = new Dictionary<string, string> {
-                {"@LastName", "%" + LastName + "%" },
-                {"@FirstName", "%" + FirstName + "%" }
+                {"@LastName", LastName},
+                {"@FirstName", FirstName}
                 };
 
                 Customer_Query(command, ID, parameters);
@@ -177,7 +219,7 @@ namespace Movie_Rental_System
 
         private void AddCustomerButton_Click(object sender, EventArgs e)
         {
-            if (FirstNameTextBox2.Text == "" || LastNameTextBox2.Text == "" || EmailTextBox.Text == "" || 
+            if (FirstNameTextBox2.Text == "" || LastNameTextBox2.Text == "" || EmailTextBox.Text == "" ||
                 AccNumTextBox.Text == "" || CcardNumTextBox.Text == "" || CcardExpTextBox.Text == "" ||
                 CcardCvvTextBox.Text == "")
             {
@@ -216,6 +258,50 @@ namespace Movie_Rental_System
 
                 Customer_Add(command, parameters);
             }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (CustIdTextBox.Text == "")
+            {
+                MessageBox.Show("Please enter a Customer ID delete a customer.", "Error");
+                return;
+            }
+
+            else
+            {
+                string CustID = CustIdTextBox.Text;
+
+                string command = "Delete FROM Actor_Rate " +
+                    "WHERE RentalRecordID IN (SELECT RentalRecordID FROM Rental_Record WHERE CustomerID = @CustID) " +
+                    "DELETE FROM Rental_Record " +
+                    "WHERE CustomerID = @CustID " +
+                    "DELETE FROM Customer_Queue " +
+                    "WHERE CustomerID = @CustID " +
+                    "DELETE FROM Customer_Phone " +
+                    "WHERE CustomerID = @CustID " +
+                    "DELETE FROM Customer " +
+                    "WHERE CustomerID = @CustID";
+
+                MessageBox.Show(command, "Error");
+
+                var parameters = new Dictionary<string, string> {
+                {"@CustID", CustID},
+                };
+
+                Customer_Delete(command, parameters);
+
+            }
+        }
+
+        private void LastNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CustIdTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

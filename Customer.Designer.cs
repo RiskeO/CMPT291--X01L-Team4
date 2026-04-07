@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             Home_Button = new Button();
-            SearchCustomerTab = new TabPage();
+            SearchDeleteCustomerTab = new TabPage();
+            DeleteButton = new Button();
             SearchButton = new Button();
             CustomerData = new DataGridView();
             LastNameTextBox = new TextBox();
@@ -61,7 +62,9 @@
             LastNameLabel2 = new Label();
             FirstNameTextBox2 = new TextBox();
             FirstNameLabel2 = new Label();
-            SearchCustomerTab.SuspendLayout();
+            CustIdTextBox = new TextBox();
+            CustIdLabel = new Label();
+            SearchDeleteCustomerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CustomerData).BeginInit();
             CustomerTabControl.SuspendLayout();
             AddCustomerTab.SuspendLayout();
@@ -79,26 +82,39 @@
             Home_Button.UseVisualStyleBackColor = false;
             Home_Button.Click += button1_Click;
             // 
-            // SearchCustomerTab
+            // SearchDeleteCustomerTab
             // 
-            SearchCustomerTab.Controls.Add(SearchButton);
-            SearchCustomerTab.Controls.Add(CustomerData);
-            SearchCustomerTab.Controls.Add(LastNameTextBox);
-            SearchCustomerTab.Controls.Add(FirstNameTextBox);
-            SearchCustomerTab.Controls.Add(LastNameLabel);
-            SearchCustomerTab.Controls.Add(FirstNameLabel);
-            SearchCustomerTab.Location = new Point(4, 24);
-            SearchCustomerTab.Name = "SearchCustomerTab";
-            SearchCustomerTab.Padding = new Padding(3);
-            SearchCustomerTab.Size = new Size(670, 300);
-            SearchCustomerTab.TabIndex = 0;
-            SearchCustomerTab.Text = "Search";
-            SearchCustomerTab.UseVisualStyleBackColor = true;
-            SearchCustomerTab.Click += SearchCustomerTab_Click;
+            SearchDeleteCustomerTab.Controls.Add(CustIdLabel);
+            SearchDeleteCustomerTab.Controls.Add(CustIdTextBox);
+            SearchDeleteCustomerTab.Controls.Add(DeleteButton);
+            SearchDeleteCustomerTab.Controls.Add(SearchButton);
+            SearchDeleteCustomerTab.Controls.Add(CustomerData);
+            SearchDeleteCustomerTab.Controls.Add(LastNameTextBox);
+            SearchDeleteCustomerTab.Controls.Add(FirstNameTextBox);
+            SearchDeleteCustomerTab.Controls.Add(LastNameLabel);
+            SearchDeleteCustomerTab.Controls.Add(FirstNameLabel);
+            SearchDeleteCustomerTab.Location = new Point(4, 24);
+            SearchDeleteCustomerTab.Name = "SearchDeleteCustomerTab";
+            SearchDeleteCustomerTab.Padding = new Padding(3);
+            SearchDeleteCustomerTab.Size = new Size(670, 300);
+            SearchDeleteCustomerTab.TabIndex = 0;
+            SearchDeleteCustomerTab.Text = "Search/Delete";
+            SearchDeleteCustomerTab.UseVisualStyleBackColor = true;
+            SearchDeleteCustomerTab.Click += SearchCustomerTab_Click;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.Location = new Point(566, 30);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(75, 23);
+            DeleteButton.TabIndex = 6;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = true;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // SearchButton
             // 
-            SearchButton.Location = new Point(301, 29);
+            SearchButton.Location = new Point(238, 30);
             SearchButton.Name = "SearchButton";
             SearchButton.Size = new Size(85, 23);
             SearchButton.TabIndex = 5;
@@ -117,7 +133,7 @@
             // 
             // LastNameTextBox
             // 
-            LastNameTextBox.Location = new Point(159, 30);
+            LastNameTextBox.Location = new Point(122, 30);
             LastNameTextBox.Name = "LastNameTextBox";
             LastNameTextBox.Size = new Size(100, 23);
             LastNameTextBox.TabIndex = 3;
@@ -132,11 +148,12 @@
             // LastNameLabel
             // 
             LastNameLabel.AutoSize = true;
-            LastNameLabel.Location = new Point(159, 12);
+            LastNameLabel.Location = new Point(122, 12);
             LastNameLabel.Name = "LastNameLabel";
             LastNameLabel.Size = new Size(63, 15);
             LastNameLabel.TabIndex = 1;
             LastNameLabel.Text = "Last Name";
+            LastNameLabel.Click += LastNameLabel_Click;
             // 
             // FirstNameLabel
             // 
@@ -150,7 +167,7 @@
             // 
             // CustomerTabControl
             // 
-            CustomerTabControl.Controls.Add(SearchCustomerTab);
+            CustomerTabControl.Controls.Add(SearchDeleteCustomerTab);
             CustomerTabControl.Controls.Add(AddCustomerTab);
             CustomerTabControl.Location = new Point(1, 0);
             CustomerTabControl.Name = "CustomerTabControl";
@@ -380,6 +397,23 @@
             FirstNameLabel2.Text = "First Name*";
             FirstNameLabel2.Click += label1_Click_1;
             // 
+            // CustIdTextBox
+            // 
+            CustIdTextBox.Location = new Point(460, 30);
+            CustIdTextBox.Name = "CustIdTextBox";
+            CustIdTextBox.Size = new Size(100, 23);
+            CustIdTextBox.TabIndex = 7;
+            CustIdTextBox.TextChanged += CustIdTextBox_TextChanged;
+            // 
+            // CustIdLabel
+            // 
+            CustIdLabel.AutoSize = true;
+            CustIdLabel.Location = new Point(460, 12);
+            CustIdLabel.Name = "CustIdLabel";
+            CustIdLabel.Size = new Size(73, 15);
+            CustIdLabel.TabIndex = 8;
+            CustIdLabel.Text = "Customer ID";
+            // 
             // Customer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -389,8 +423,8 @@
             Controls.Add(CustomerTabControl);
             Name = "Customer";
             Text = "Customer";
-            SearchCustomerTab.ResumeLayout(false);
-            SearchCustomerTab.PerformLayout();
+            SearchDeleteCustomerTab.ResumeLayout(false);
+            SearchDeleteCustomerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CustomerData).EndInit();
             CustomerTabControl.ResumeLayout(false);
             AddCustomerTab.ResumeLayout(false);
@@ -401,7 +435,7 @@
         #endregion
 
         private Button Home_Button;
-        private TabPage SearchCustomerTab;
+        private TabPage SearchDeleteCustomerTab;
         private DataGridView CustomerData;
         private TextBox LastNameTextBox;
         private TextBox FirstNameTextBox;
@@ -433,5 +467,8 @@
         private Button AddCustomerButton;
         private TextBox CcardCvvTextBox;
         private Label CcardCvvLabel;
+        private Button DeleteButton;
+        private Label CustIdLabel;
+        private TextBox CustIdTextBox;
     }
 }
