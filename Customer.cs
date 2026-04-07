@@ -283,7 +283,6 @@ namespace Movie_Rental_System
                     "DELETE FROM Customer " +
                     "WHERE CustomerID = @CustID";
 
-                MessageBox.Show(command, "Error");
 
                 var parameters = new Dictionary<string, string> {
                 {"@CustID", CustID},
