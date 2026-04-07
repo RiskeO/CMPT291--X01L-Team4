@@ -109,7 +109,7 @@ CustomerID INT NOT NULL,
 MovieID INT NOT NULL,
 SortNum INT NOT NULL,
 PRIMARY KEY ( CustomerID, MovieID ),
-UNIQUE ( CustomerID, SortNum ),
+UNIQUE ( MovieID, SortNum ),
 FOREIGN KEY ( CustomerID ) REFERENCES Customer( CustomerID ),
 FOREIGN KEY ( MovieID ) REFERENCES Movie( MovieID )
 );

@@ -45,12 +45,22 @@ INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
 	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust1@gmail.com'),
 		'7801111111', 'Home' );
 
+INSERT INTO Customer (CustomerID, LastName, FirstName, Address, City, Province, 
+		PostalCode, Email, AccountNum, CreditCardNum, CreditCardExp, CreditCardCvv)
+	VALUES ( NEXT VALUE FOR Customer_CustomerID_Seq, 'Last2', 'Customer2', 
+		'11102 112st', 'Edmonton', 'AB', 'A1A1A2', 'cust2@gmail.com', 'ABC002', 
+		'1111222233334442', '1227', '112');
+
+INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
+	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust2@gmail.com'),
+		'7801111112', 'Home' );
+
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 	VALUES ( 'Die Hard', 'Action', 3.5, 5 );
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
-	VALUES ('Die Hard 2', 'Action', 4.5, 4 );
+	VALUES ('Die Hard 2', 'Action', 4.5, 1 );
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 	VALUES ( 'Die Hard 3', 'Action', 5.5, 3 );
@@ -73,12 +83,21 @@ INSERT INTO Actor_Appear
 
 
 INSERT INTO Customer_queue
-	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 1)
+
+INSERT INTO Customer_queue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 1)
+
+INSERT INTO Customer_queue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer2'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 2)
 
 INSERT INTO Customer_queue
-	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Customer1'),
-		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 3)
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer2'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 2)
+
 
 
 INSERT INTO Rental_Record (EmployeeID, CustomerID, MovieID, MovieRate)
