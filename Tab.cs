@@ -1,25 +1,34 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace test2
+    /* you will need to change the code to it doesn't used the datagrid to do everything.
+     * In the main you will select the movie, and that will be in all the other datagrid, which you can edit, add delete
+     */
 {
+
+
+
     public partial class Tab : Form
     {
-        private string connStr = "Server=DEVICE2;Database=CMP291Project;Integrated Security=True;TrustServerCertificate=true;";
+        private string _selectedMovieID = "";
+        private string _originalMovieName = "";
+        private string connStr = "Server=(localdb)\\MSSQLLocalDB;Database=CMP291Project;Integrated Security=True;TrustServerCertificate=true;";
         public Tab()
         {
             InitializeComponent();
-            CallLoadMovies();
-            CallLoadMoviesDelete();
-            CallLoadMoviesEdit();
+            //CallLoadMovies();
+
 
         }
 
@@ -28,7 +37,7 @@ namespace test2
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string sql = @"SELECT MovieName, MovieType, Fee, NumOfCopy, NumOfRented
+                string sql = @"SELECT MovieID,MovieName, MovieType, Fee, NumOfCopy, NumOfRented
                        FROM Movie
                        WHERE MovieName LIKE @title
                        AND (@type = '' OR MovieType = @type)
@@ -64,29 +73,7 @@ namespace test2
                 (int)S_max_rent.Value, (int)S_mini_rent.Value, M_data);
         }
 
-        private void CallLoadMoviesDelete()
-        {
-            LoadMovies(
-                D_search.Text.Trim(),
-                D_type.SelectedItem != null ? D_type.SelectedItem.ToString() : "",
-                D_man_cost.Value, D_mini_cost.Value,
-                (int)D_max_copy.Value, (int)D_mini_copy.Value,
-                (int)D_max_rent.Value, (int)D_mini_rent.Value,
-                D_data
-            );
-        }
 
-        private void CallLoadMoviesEdit()//
-        {
-            LoadMovies(
-                E_search.Text.Trim(),
-                E_type.SelectedItem != null ? E_type.SelectedItem.ToString() : "",
-                100, 0,
-                100, 0,
-                100, 0,
-                dataGridView4
-            );
-        }
 
         private void Edit_Click(object sender, EventArgs e)
         {
@@ -95,7 +82,7 @@ namespace test2
 
         private void M_type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CallLoadMovies();
+            //CallLoadMovies();
         }
 
         private void MB_search_Click(object sender, EventArgs e)
@@ -110,7 +97,7 @@ namespace test2
 
         private void M_search_TextChanged(object sender, EventArgs e)
         {
-            CallLoadMovies();
+            //CallLoadMovies();
         }
 
         private void S_max_copy_ValueChanged(object sender, EventArgs e)
@@ -163,11 +150,6 @@ namespace test2
 
         }
 
-        private void A_data_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void AB_add_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(A_search.Text))
@@ -216,97 +198,14 @@ namespace test2
 
         }
 
-        private void D_search_TextChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_type_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DB_delete_Click(object sender, EventArgs e)
-        {
-            if (D_data.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a movie to delete.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (SqlConnection conn = new SqlConnection(connStr))
-            {
-                string sql = @"INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy, NumOfRented)
-                       VALUES (@name, @type, @fee, @copy, @rent)";
-                SqlDataAdapter da = new SqlDataAdapter();
-
-
-                da.DeleteCommand = new SqlCommand("DELETE FROM Movie WHERE MovieName = @name", conn);
-                da.DeleteCommand.Parameters.AddWithValue("@name", D_search.Text.Trim());
-                conn.Open();
-                da.DeleteCommand.ExecuteNonQuery();
-
-            }
-            CallLoadMoviesDelete();
-
-        }
-
-        private void DB_clear_Click(object sender, EventArgs e)
-        {
-            D_search.Clear();
-            D_type.SelectedIndex = -1;
-            D_man_cost.Value = D_man_cost.Maximum;
-            D_mini_cost.Value = 0;
-            D_max_copy.Value = D_max_copy.Maximum;
-            D_mini_copy.Value = 0;
-            D_max_rent.Value = D_max_rent.Maximum;
-            D_mini_rent.Value = 0;
-            D_data.DataSource = null;
-        }
-
-        private void D_max_copy_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_mini_copy_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_max_rent_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_mini_rent_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_man_cost_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
-        private void D_mini_cost_ValueChanged(object sender, EventArgs e)
-        {
-            CallLoadMoviesDelete();
-        }
-
         private void E_search_TextChanged(object sender, EventArgs e)
         {
-            CallLoadMoviesEdit();
+
         }
 
         private void E_type_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CallLoadMoviesEdit();
+
         }
 
         private void E_copy_TextChanged(object sender, EventArgs e)
@@ -324,18 +223,6 @@ namespace test2
 
         }
 
-        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)//
-        {
-            if (e.RowIndex < 0) return;
-
-            DataGridViewRow row = dataGridView4.Rows[e.RowIndex];
-            E_search.Text = row.Cells["MovieName"].Value.ToString();
-            E_type.Text = row.Cells["MovieType"].Value.ToString();
-            E_cost.Text = row.Cells["Fee"].Value.ToString();
-            E_copy.Text = row.Cells["NumOfCopy"].Value.ToString();
-            E_rent.Text = row.Cells["NumOfRented"].Value.ToString();
-        }
-
         private void E_cancel_Click(object sender, EventArgs e)
         {
             E_search.Clear();
@@ -345,23 +232,17 @@ namespace test2
             E_rent.Clear();
         }
 
+        
         private void EB_change_Click(object sender, EventArgs e)
         {
-            if (dataGridView4.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a movie to edit.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string originalName = dataGridView4.SelectedRows[0].Cells["MovieName"].Value.ToString();
 
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 string sql = @"UPDATE Movie
-                       SET MovieName  = @name,
-                           MovieType  = @type,
-                           Fee        = @fee,
-                           NumOfCopy  = @copy,
+                       SET MovieName   = @name,
+                           MovieType   = @type,
+                           Fee         = @fee,
+                           NumOfCopy   = @copy,
                            NumOfRented = @rent
                        WHERE MovieName = @originalName";
 
@@ -371,13 +252,207 @@ namespace test2
                 cmd.Parameters.AddWithValue("@fee", E_cost.Text.Trim());
                 cmd.Parameters.AddWithValue("@copy", E_copy.Text.Trim());
                 cmd.Parameters.AddWithValue("@rent", E_rent.Text.Trim());
-                cmd.Parameters.AddWithValue("@originalName", originalName);
+                cmd.Parameters.AddWithValue("@originalName", _originalMovieName);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
 
-            CallLoadMoviesEdit();
+            MessageBox.Show("Movie updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            _originalMovieName = "";
         }
+        private void MB_delete_Click_Click(object sender, EventArgs e)
+        {
+            if (M_data.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a movie first.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string movieName = M_data.SelectedRows[0].Cells["MovieName"].Value.ToString();
+
+            var confirm = MessageBox.Show($"Are you sure you want to delete '{movieName}'?",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes) return;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Movie WHERE MovieName = @name", conn);
+                cmd.Parameters.AddWithValue("@name", movieName);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Movie deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CallLoadMovies();
+        }
+
+        private void MB_edit_Click_Click(object sender, EventArgs e)
+        {
+            if (M_data.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a movie first.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataGridViewRow row = M_data.SelectedRows[0];
+
+            _originalMovieName = row.Cells["MovieName"].Value.ToString().Trim();
+
+            tabControl1.SelectedIndex = 2;
+
+
+            E_search.Text = row.Cells["MovieName"].Value.ToString();
+            E_type.Text = row.Cells["MovieType"].Value.ToString();
+            E_cost.Text = row.Cells["Fee"].Value.ToString();
+            E_copy.Text = row.Cells["NumOfCopy"].Value.ToString();
+            E_rent.Text = row.Cells["NumOfRented"].Value.ToString();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MB_assign_Click(object sender, EventArgs e)
+        {
+            if (M_data.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a movie first.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            _selectedMovieID = M_data.SelectedRows[0].Cells["MovieID"].Value.ToString();
+
+            tabControl1.SelectedIndex = 3; // adjust to your tab index
+
+            LoadAssignedActors();
+            LoadAvailableActors();
+        }
+        private void LoadAssignedActors()
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string sql = @"SELECT a.ActorID, a.Name
+                       FROM Actor a
+                       INNER JOIN Actor_Appear aa ON a.ActorID = aa.ActorID
+                       WHERE aa.MovieID = @movieID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@movieID", _selectedMovieID);
+                conn.Open();
+
+                list_assign.Items.Clear();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list_assign.Items.Add(new ActorItem(
+                        reader["ActorID"].ToString(),
+                        reader["Name"].ToString()
+                    ));
+                }
+            }
+        }
+
+        private void LoadAvailableActors()
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string sql = @"SELECT a.ActorID, a.Name
+                       FROM Actor a
+                       WHERE a.ActorID NOT IN (
+                           SELECT ActorID FROM Actor_Appear WHERE MovieID = @movieID
+                       )";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@movieID", _selectedMovieID);
+                conn.Open();
+
+                list_ava.Items.Clear();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list_ava.Items.Add(new ActorItem(
+                        reader["ActorID"].ToString(),
+                        reader["Name"].ToString()
+                    ));
+                }
+            }
+        }
+        private void list_ava_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void list_assign_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AA_add_Click(object sender, EventArgs e)
+        {
+            if (list_ava.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an actor to add.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ActorItem actor = (ActorItem)list_ava.SelectedItem;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand("INSERT INTO Actor_Appear (MovieID, ActorID) VALUES (@movieID, @actorID)", conn);
+                cmd.Parameters.AddWithValue("@movieID", _selectedMovieID);
+                cmd.Parameters.AddWithValue("@actorID", actor.ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            LoadAssignedActors();
+            LoadAvailableActors();
+        }
+
+        private void AA_remove_Click(object sender, EventArgs e)
+        {
+            if (list_assign.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an actor to remove.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ActorItem actor = (ActorItem)list_assign.SelectedItem;
+
+            var confirm = MessageBox.Show($"Are you sure you want to remove '{actor.Name}' from this movie?",
+                "Confirm Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes) return;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Actor_Appear WHERE MovieID = @movieID AND ActorID = @actorID", conn);
+                cmd.Parameters.AddWithValue("@movieID", _selectedMovieID);
+                cmd.Parameters.AddWithValue("@actorID", actor.ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+
+            LoadAssignedActors();
+            LoadAvailableActors();
+        }
+    }
+
+    public class ActorItem
+    {
+        public string ID { get; set; }
+        public string Name { get; set; }
+
+        public ActorItem(string id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
+
+        public override string ToString() => Name;
     }
 }
