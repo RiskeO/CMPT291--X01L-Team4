@@ -32,7 +32,6 @@
             QueueData = new DataGridView();
             RefreshQueueButton = new Button();
             RentMovieButton = new Button();
-            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)QueueData).BeginInit();
             SuspendLayout();
             // 
@@ -81,19 +80,11 @@
             RentMovieButton.UseVisualStyleBackColor = true;
             RentMovieButton.Click += RentMovieButton_Click;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(626, 14);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(307, 39);
-            textBox1.TabIndex = 8;
-            // 
             // Rental
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1271, 725);
-            Controls.Add(textBox1);
             Controls.Add(RentMovieButton);
             Controls.Add(RefreshQueueButton);
             Controls.Add(QueueData);
@@ -103,7 +94,6 @@
             Load += Rental_Load;
             ((System.ComponentModel.ISupportInitialize)QueueData).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -112,6 +102,5 @@
         private DataGridView QueueData;
         private Button RefreshQueueButton;
         private Button RentMovieButton;
-        private TextBox textBox1;
     }
 }
