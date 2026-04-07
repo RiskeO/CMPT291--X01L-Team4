@@ -105,7 +105,7 @@ namespace Movie_Rental_System
 
         private void RentMovieButton_Click(object sender, EventArgs e)
         {
-            textBox1.Text = Convert.ToString(QueueData.CurrentRow.Cells[0].Value);
+            //textBox1.Text = Convert.ToString(QueueData.CurrentRow.Cells[0].Value);
 
             if (QueueData.CurrentRow.Cells[0].Value == null)
             {
