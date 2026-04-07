@@ -23,5 +23,15 @@ namespace Movie_Rental_System
         {
             this.Close();
         }
+
+        private void SearchCustomerTab_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

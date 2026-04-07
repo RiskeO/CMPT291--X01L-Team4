@@ -25,7 +25,7 @@ namespace Movie_Rental_System
 
             if (connection == null)
             {
-                string connectionString = "Server=DESKTOP-I0H24SB;" +
+                string connectionString = "Server=(localdb)\\MSSQLLocalDB;" +
                          "Database=CMP291Project;" +
                          "Trusted_Connection=True;" +
                          "TrustServerCertificate=True;"; 
