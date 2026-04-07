@@ -103,32 +103,12 @@ INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
 	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust2@gmail.com'),
 		'7802221111', 'Cell' );
 
-INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
-	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust3@gmail.com'),
-		'7803331111', 'Home' );
-
-INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
-	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'cust4@gmail.com'),
-		'7804441111', 'Cell' );
-
-INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
-	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'chrislee1@gmail.com'),
-		'7805551111', 'Home' );
-
-INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
-	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'chrislee2@gmail.com'),
-		'7806661111', 'Cell' );
-
-INSERT INTO Customer_Phone (CustomerID, PhoneNum, PhoneType)
-	VALUES ( (SELECT CustomerID FROM Customer WHERE Email = 'jordantaylor@gmail.com'),
-		'7807771111', 'Work' );
-
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 	VALUES ( 'Die Hard', 'Action', 3.5, 5 );
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
-	VALUES ('Die Hard 2', 'Action', 4.5, 4 );
+	VALUES ('Die Hard 2', 'Action', 4.5, 1 );
 
 INSERT INTO Movie (MovieName, MovieType, Fee, NumOfCopy)
 	VALUES ( 'Die Hard 3', 'Action', 5.5, 3 );
@@ -247,12 +227,21 @@ INSERT INTO Actor_Appear
 
 
 INSERT INTO Customer_queue
-	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Last1'),
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 1)
+
+INSERT INTO Customer_queue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer1'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 1)
+
+INSERT INTO Customer_queue
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer2'),
 		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 2'), 2)
 
 INSERT INTO Customer_queue
-	VALUES ( (SELECT CustomerID FROM Customer WHERE LastName = 'Last1'),
-		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 3)
+	VALUES ( (SELECT CustomerID FROM Customer WHERE FirstName = 'Customer2'),
+		(SELECT MovieID FROM Movie WHERE MovieName = 'Die Hard 3'), 2)
+
 
 INSERT INTO Customer_queue
 	VALUES ( (SELECT CustomerID FROM Customer WHERE AccountNum = 'ABC002'),
