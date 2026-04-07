@@ -64,12 +64,11 @@ namespace Movie_Rental_System
 
         private void Rental_Button_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Rental Page was not been added yet");
 
-            /*
-            Rental rental = new Rental(myConnection, myCommand, myReader);
+            
+            Rental rental = new Rental(myConnection);
             Open_New_Form(rental);
-            */
+            
         }
 
         private void Report_Button_Click(object sender, EventArgs e)
