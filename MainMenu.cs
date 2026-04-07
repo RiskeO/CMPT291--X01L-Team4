@@ -81,7 +81,9 @@ namespace Movie_Rental_System
         private void Logout_Button_Click(object sender, EventArgs e)
         {
             Login login = new Login(myConnection);
-            Open_New_Form(login);
+            login.FormClosed += (s, args) => this.Close();
+            login.Show();
+            this.Hide();
         }
     }
 }
