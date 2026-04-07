@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             Home_Button = new Button();
-            CustomerTabControl = new TabControl();
             SearchCustomerTab = new TabPage();
+            SearchButton = new Button();
+            CustomerData = new DataGridView();
             LastNameTextBox = new TextBox();
             FirstNameTextBox = new TextBox();
             LastNameLabel = new Label();
             FirstNameLabel = new Label();
-            AddRemoveCustomerTab = new TabPage();
-            CustomerDataTab = new TabPage();
-            CustomerTabControl.SuspendLayout();
+            CustomerTabControl = new TabControl();
             SearchCustomerTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CustomerData).BeginInit();
+            CustomerTabControl.SuspendLayout();
             SuspendLayout();
             // 
             // Home_Button
@@ -53,19 +54,10 @@
             Home_Button.UseVisualStyleBackColor = false;
             Home_Button.Click += button1_Click;
             // 
-            // CustomerTabControl
-            // 
-            CustomerTabControl.Controls.Add(SearchCustomerTab);
-            CustomerTabControl.Controls.Add(AddRemoveCustomerTab);
-            CustomerTabControl.Controls.Add(CustomerDataTab);
-            CustomerTabControl.Location = new Point(1, 0);
-            CustomerTabControl.Name = "CustomerTabControl";
-            CustomerTabControl.SelectedIndex = 0;
-            CustomerTabControl.Size = new Size(678, 328);
-            CustomerTabControl.TabIndex = 1;
-            // 
             // SearchCustomerTab
             // 
+            SearchCustomerTab.Controls.Add(SearchButton);
+            SearchCustomerTab.Controls.Add(CustomerData);
             SearchCustomerTab.Controls.Add(LastNameTextBox);
             SearchCustomerTab.Controls.Add(FirstNameTextBox);
             SearchCustomerTab.Controls.Add(LastNameLabel);
@@ -78,6 +70,25 @@
             SearchCustomerTab.Text = "Search";
             SearchCustomerTab.UseVisualStyleBackColor = true;
             SearchCustomerTab.Click += SearchCustomerTab_Click;
+            // 
+            // SearchButton
+            // 
+            SearchButton.Location = new Point(301, 29);
+            SearchButton.Name = "SearchButton";
+            SearchButton.Size = new Size(85, 23);
+            SearchButton.TabIndex = 5;
+            SearchButton.Text = "Search";
+            SearchButton.UseVisualStyleBackColor = true;
+            SearchButton.Click += SearchButton_Click;
+            // 
+            // CustomerData
+            // 
+            CustomerData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            CustomerData.Location = new Point(6, 77);
+            CustomerData.Name = "CustomerData";
+            CustomerData.Size = new Size(658, 150);
+            CustomerData.TabIndex = 4;
+            CustomerData.CellContentClick += dataGridView1_CellContentClick;
             // 
             // LastNameTextBox
             // 
@@ -112,25 +123,14 @@
             FirstNameLabel.Text = "First Name";
             FirstNameLabel.Click += label1_Click;
             // 
-            // AddRemoveCustomerTab
+            // CustomerTabControl
             // 
-            AddRemoveCustomerTab.Location = new Point(4, 24);
-            AddRemoveCustomerTab.Name = "AddRemoveCustomerTab";
-            AddRemoveCustomerTab.Padding = new Padding(3);
-            AddRemoveCustomerTab.Size = new Size(670, 300);
-            AddRemoveCustomerTab.TabIndex = 1;
-            AddRemoveCustomerTab.Text = "Add/Remove";
-            AddRemoveCustomerTab.UseVisualStyleBackColor = true;
-            // 
-            // CustomerDataTab
-            // 
-            CustomerDataTab.Location = new Point(4, 24);
-            CustomerDataTab.Name = "CustomerDataTab";
-            CustomerDataTab.Padding = new Padding(3);
-            CustomerDataTab.Size = new Size(670, 300);
-            CustomerDataTab.TabIndex = 2;
-            CustomerDataTab.Text = "Data";
-            CustomerDataTab.UseVisualStyleBackColor = true;
+            CustomerTabControl.Controls.Add(SearchCustomerTab);
+            CustomerTabControl.Location = new Point(1, 0);
+            CustomerTabControl.Name = "CustomerTabControl";
+            CustomerTabControl.SelectedIndex = 0;
+            CustomerTabControl.Size = new Size(678, 328);
+            CustomerTabControl.TabIndex = 1;
             // 
             // Customer
             // 
@@ -141,22 +141,23 @@
             Controls.Add(CustomerTabControl);
             Name = "Customer";
             Text = "Customer";
-            CustomerTabControl.ResumeLayout(false);
             SearchCustomerTab.ResumeLayout(false);
             SearchCustomerTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)CustomerData).EndInit();
+            CustomerTabControl.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button Home_Button;
-        private TabControl CustomerTabControl;
         private TabPage SearchCustomerTab;
-        private TabPage AddRemoveCustomerTab;
-        private Label FirstNameLabel;
+        private DataGridView CustomerData;
         private TextBox LastNameTextBox;
         private TextBox FirstNameTextBox;
         private Label LastNameLabel;
-        private TabPage CustomerDataTab;
+        private Label FirstNameLabel;
+        private TabControl CustomerTabControl;
+        private Button SearchButton;
     }
 }
